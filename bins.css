@@ -145,15 +145,16 @@ a.b1-bg:hover, a.b2-bg:hover, a.b3-bg:hover, a.b4-bg:hover, a.b5-bg:hover, a.b6-
 
 
 header { width: 100%; padding: 0px; text-align: left; font-size: 1em; line-height: 1em; }
+header nav { background-color: black; color: white; }
 header nav ul { width: 100%; text-align: center; margin: inherit; }
 header nav li { display: block; }
-header nav li a { line-height: 2em; padding: 1em; text-align: right; transition: line-height: 0.3s ease-in; }
+header nav li a { line-height: 2em; padding: 1em; text-align: right; transition: line-height: 0.3s ease-in; text-decoration: none; }
 header nav ul > li { display: inline-block; }
 header nav ul > li a { width: 100%; padding: 1em; display: inline-block; color: inherit; }
 header nav ul > li a:hover, header nav ul > li a:focus { background-color: #efefef; color: black; }
 header nav ul > li.seasonal a:hover, header nav li.seasonal a:focus { background-color: inherit; }
-header nav p { padding: 1em; line-height: 1.5em; }
-header nav p a, header nav p a:visited { color: inherit; }
+header .holder > p { padding: 1em; line-height: 1.5em; }
+header .holder > p a, header .holder > p a:visited { color: inherit; }
 
 /* Main box styling */
 #main .holder { padding: 2em 1em; }
@@ -165,8 +166,8 @@ header, footer, #main {
 }
 header > .holder {
 	position: absolute;
-	background: black;
-	color: white;
+	background: white;
+	color: black;
 	top: 0px;
 	display: block;
 	bottom: 0px;
