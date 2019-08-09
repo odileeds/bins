@@ -247,7 +247,6 @@ footer { display: none; }
 	.hamburger { width: 3em; height: 3em; }
 	label.hamburger::after { line-height: 1em; }
 	input.hamburger:checked, input.hamburger:checked + label.hamburger { left: 75%; }
-	input.hamburger:checked ~ #main, input.hamburger:checked ~ header, input.hamburger:checked ~ footer { margin-left: 75%; }
 	input.hamburger ~ header > .holder { left: -75%; width: 75%; }
 	header .title { padding-left: 3em; }
 	header img { max-width: 40%; height: 1.5em; margin-right: 0.5em; }
