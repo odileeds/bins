@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8" />
+	<title>Leeds bin dates</title>
+	<script type="text/javascript" src="stuquery.js"></script>
+	<link rel="StyleSheet" href="bins.css" type="text/css" />
+	<meta name="theme-color" content="#F9BC26">
+	<link rel="apple-touch-icon" href="odileeds.png">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@ODILeeds">
+	<meta name="twitter:url" property="og:url" content="https://odileeds.org/projects/bins/">
+	<meta name="twitter:title" property="og:title" content="Bin times">
+	<meta name="twitter:description" property="og:description" content="Find the rubbish bin collection times for Leeds">
+	<meta name="twitter:image" property="og:image" content="https://odileeds.org/resources/images/odileeds.png">
+	<meta name="keywords" content="bins,collection,refuse,Leeds" />
+	<link rel="manifest" href="manifest.webmanifest">
+	<script type="text/javascript" src="bins.js"></script>
+</head>
+<body class="b5-bg">
+
+	<input type="checkbox" id="hamburger" class="hamburger">
+	<label for="hamburger" class="hamburger"><span class="nv">Toggle menu (if not visible)</span></label>
+	<header class="c14-bg padded">
+		<div class="title">
+			<h1>Leeds bin dates</h1>
+		</div>
+		<div class="holder">
+			<nav>
+			<ul>
+				<li><a href="#locate" class="c14-bg">Bin dates</a></li>
+				<li><a href="#recycling">Recycling</a></li>
+				<li><a href="#questions">Questions</a></li>
+				<li><a href="#about">About</a></li>
+			</ul>
+			<p>Created by <a href="https://odileeds.org/">ODI Leeds</a> using open data published on <a href="https://datamillnorth.org/">Data Mill North</a>.</p>
+			</nav>
+		</div>
+	</header>
+	<div id="main">
+
+		<div class="holder">
+			<section id="locate" class="screen">
+
+			</section>
+			<section id="results" class="screen">
+
+			</section>
+			<section id="recycling" class="screen">
+				<h2>Recycling</h2>
+				<ol>
+					<li><a href="http://whatgoeswhere.org.uk/phone/index.html?utm_source=mobile&utm_campaign=LeedsBinApp&utm_medium=web">What goes where?</a></li>
+					<li><a href="https://www.leeds.gov.uk/residents/bins-and-recycling/waste-permit-scheme?utm_source=mobile&utm_campaign=LeedsBinApp&utm_medium=web&utm_content=permits">Request a recycling site (tip) permit</a></li>
+				</ol>
+			</section>
+			<section id="questions" class="screen">
+				<h2>FAQ</h2>
+				<ul class="questions">
+				<li>
+					<h3>The council didn't collect my bin!</h3>
+					<p>This tool isn't made by the Council but relies on data they openly publish. However, you can <a href="https://www.leeds.gov.uk/residents/bins-and-recycling/your-bins/bin-collection-problems?utm_source=mobile&utm_campaign=LeedsBinApp&utm_medium=web&utm_content=collectionproblem">report a missed bin collection</a> to Leeds City Council on their website.</p>
+				</li>
+				<li>
+					<h3>I don't have a bin or it has gone missing!</h3>
+					<p>Oh no! You could <a href="https://www.leeds.gov.uk/residents/bins-and-recycling/new-or-replacement-bin">request a new or replacement bin from Leeds City Council</a>. Note that they now charge for replacements.</p>
+				</li>
+				<li>
+					<h3>Who made this?</h3>
+					<p>Stuart Lowe at <a href="https://odileeds.org">ODI Leeds</a> as an experiment in dealing with postcode-less addresses and making progressive web apps. Our friends at imactivate also make <a href="https://odileeds.org/products/bin-app/">the Leeds Bins App</a> on Android and iOS which uses some closed data to allow postcode lookups.</p>
+				</li>
+				<li>
+					<h3>How do you know my bin collections dates?</h3>
+					<p>Leeds City Council publish <a href="https://datamillnorth.org/dataset/household-waste-collections">open data on Data Mill North</a>. By publishing the collection information openly (in terms of availability and in terms of licence), things like this can be built.</p>
+				</li>
+				<li>
+					<h3>Why can't I find my address using my postcode?</h3>
+					<p>Royal Mail own the UK's Postcode Address File (PAF). That limits what information people can share. Leeds City Council are not allowed to release a file that contains the address and postcode of every household in Leeds. So Leeds City Council only publish the house name/number, street name, and locality. We've had to combine that with <a href="https://www.ordnancesurvey.co.uk/business-and-government/products/os-open-names.html">Ordnance Survey Open Names</a> data to clean up the presentation of the data.</p>
+				</li>
+				<li>
+					<h3>Why can't I just type my address with the number then the street?</h3>
+					<p>Due to the decisions we've taken about protecting your privacy (we don't want to track you) we've had to order and split up the data by streets. That means that the first thing we search for has to be the street name.</p>
+				<li>
+					<h3>What about my privacy?</h3>
+					<p>We care about privacy. Addresses are sensitive information. The raw data from Data Mill North is around 290MB and we don't want to send all that to your browser. We want to send you a small enough chunk of data to be manageable but without our server knowing your exact address. So, we've split the original data into groups of at least 50 streets ordered alphabetically. When you enter a street, we work out (in your browser) which chunk of streets to ask for. As they are alphabetically sorted, the streets in this chunk can be spread all over the city. Once that comes back to your browser we then use your house number (only in your browser) to search through that list. We have also packaged up the bin collection times in the same way so that our server doesn't gain any extra information. The end result is that we know which chunk of 50+ streets you've requested (so that we can tell you your collection times) but can't track you further than that.</p>
+				</li>
+				<li>
+					<h3>Do you set cookies?</h3>
+					<p>No. However, a Service Worker is created (where your browser supports it) to store resources offline.</p>
+				</li>
+				</ul>
+			</section>
+			<section id="about" class="screen">
+				<h2>About</h2>
+				<p>This web-based app was created by ODI Leeds as an experiment in August 2019. The <a href="https://datamillnorth.org/dataset/household-waste-collections">bin collection data published by Leeds City Council on Data Mill North</a> does not include postcode due to licensing issues with Royal Mail. This is an experiment to combine the addresses provided with OS open data to make it possible to only use the house name/number and street name to locate a property.</p>
+				<h3>Copyright and credits</h3>
+				<ul>
+					<li><strong>Processing:</strong> Stuart Lowe, ODI Leeds (<a href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>)</li>
+					<li style="display:none"><strong>Local Authority Boundaries:</strong> <a href="http://geoportal.statistics.gov.uk/datasets/local-authority-districts-april-2019-boundaries-uk-buc">Local Authority Districts (April 2019) Boundaries UK BUC</a> (OGL v3; Contains National Statistics data &copy; Crown copyright and database right 2019; Contains OS data &copy; Crown copyright and database right 2019)</li>
+					<li><strong>Bin collection data:</strong> <a href="http://opendata.leeds.gov.uk/downloads/bins/dm_premises.csv">Household premises</a> and <a href="http://opendata.leeds.gov.uk/downloads/bins/dm_jobs.csv">waste collections</a> from Leeds City Council (<a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">OGLv3</a>).</li>
+					<li><strong>Addresses:</strong> Contains Ordnance Survey data © Crown copyright and database right 2018. Contains Royal Mail data © Royal Mail copyright and database right 2018. Contains National Statistics data © Crown copyright and database right 2018.</li>
+					<li><strong>Edit icon:</strong> <a href="https://commons.wikimedia.org/wiki/File:Edit_icon.svg">pencil icon</a> MGalloway (WMF) (<a href="https://creativecommons.org/licenses/by-sa/3.0/deed.en">CC-BY-SA 3.0</a>)</li>
+				</li>
+			</section>
+		</div>
+	</div>
+
+	<footer class="b1-bg">
+		<div class="holder">
+			<p>&copy; 2019 ODI Leeds
+			<br />Processing and visualisation: Stuart Lowe (<a href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>)
+			<br />Local Authority Boundaries: <a href="http://geoportal.statistics.gov.uk/datasets/local-authority-districts-april-2019-boundaries-uk-buc">Local Authority Districts (April 2019) Boundaries UK BUC</a> (OGL v3; Contains National Statistics data &copy; Crown copyright and database right 2019; Contains OS data &copy; Crown copyright and database right 2019)
+			<br />Addresses: Contains Ordnance Survey data © Crown copyright and database right 2018. Contains Royal Mail data © Royal Mail copyright and database right 2018. Contains National Statistics data © Crown copyright and database right 2018.
+			</p>
+		</div>
+	</footer>
+
+</body>
+</html>

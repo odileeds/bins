@@ -1,0 +1,24 @@
+{
+	"lang": "en",
+	"dir": "ltr",
+	"name": "Leeds bin dates",
+	"short_name": "Leeds Bins",
+	"description": "Get your next bin collection dates.",
+	"start_url": "https://odileeds.org/projects/bins/index.html",
+	"display": "fullscreen",
+	"orientation": "portrait",
+	"orientation": "portrait",
+	"theme_color": "#67E767",
+	"background_color": "#67E767",
+	"serviceworker": {
+		"src": "sw.js",
+		"scope": "/projects/bins/",
+		"update_via_cache": "none"
+	},
+	"icons": [{
+		"src": "odileeds.png",
+		"sizes": "36x36 48x48 72x72 96x96 144x144 192x192 512x512",
+		"type": "image/png"
+
+	}]
+}
