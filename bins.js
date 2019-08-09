@@ -27,7 +27,7 @@ function Bins(inp){
 	let deferredPrompt;
 	var _obj = this;
 	if('serviceWorker' in navigator){
-		navigator.serviceWorker.register('sw.js',{'scope':'/projects/bins/'}).then(function(registration){
+		navigator.serviceWorker.register('sw.js',{'scope':'/bins/'}).then(function(registration){
 			_obj.log('Service worker registered');
 		});
 	}
