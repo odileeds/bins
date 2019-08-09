@@ -217,15 +217,21 @@ console.log('keyup',e.originalEvent.keyCode)
 						var found = -1;
 						var str_lo = str;
 						var str_hi = str;
-						if(str.length <= 3){
-							while(str_lo.length < 3) str_lo += 'A';
-							while(str_hi.length < 3) str_hi += 'Z';
-							for(var i = 0 ; i < me.files.length; i++){
-								if(str_lo >= me.files[i].from && str_hi <= me.files[i].to){
-									found = i;
-									i = me.files.length;
-								}
+						
+						if(str.length > 3){
+							str_lo = str.substr(0,3);
+							str_hi = str.substr(0,3);
+						}
+						while(str_lo.length < 3) str_lo += 'A';
+						while(str_hi.length < 3) str_hi += 'Z';
+
+						for(var i = 0 ; i < me.files.length; i++){
+							if(str_lo >= me.files[i].from && str_hi <= me.files[i].to){
+								found = i;
+								i = me.files.length;
 							}
+						}
+						if(str.length > 0){
 							if(found >= 0){
 								me.filefound = found;
 								// Check if the data has already been loaded
@@ -263,8 +269,6 @@ console.log('keyup',e.originalEvent.keyCode)
 									me.processResult(str);
 								}
 							}
-						}else if(str.length > 3){
-							me.processResult(str);
 						}else{
 							me.clearResults();
 						}
