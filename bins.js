@@ -23,7 +23,7 @@ function Bins(inp){
 
 	if(console) console.log('%cBins v'+this.version+'%c','font-weight:bold;font-size:1.25em;','');
 
-
+	/* Set up the Service Worker */
 	let deferredPrompt;
 	var _obj = this;
 	if('serviceWorker' in navigator){
@@ -59,9 +59,15 @@ function Bins(inp){
 			});
 		}
 	}
-
-	// Create some HTML to fill later
-	this.el.output.append('<div class="list"></div>');
+	
+	// Update network status
+	updateNetworkStatus();
+	window.addEventListener('online', updateNetworkStatus, false);
+	window.addEventListener('offline', updateNetworkStatus, false);
+	function updateNetworkStatus(){
+		if(navigator.onLine) S('header').removeClass('b4-bg').addClass('c14-bg');
+		else S('header').removeClass('c14-bg').addClass('b4-bg');
+	}
 
 	this.init();
 
@@ -139,6 +145,13 @@ Bins.prototype.getIndex = function(){
 }
 
 Bins.prototype.init = function(){
+
+	// Create some HTML to fill later
+	this.el.output.append('<div class="list"></div>');
+
+	S('.bg').on('click',function(e){
+		S('#hamburger')[0].checked = false;
+	});
 
 	if(this.el.input.find('.typeahead').length == 0){
 
