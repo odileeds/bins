@@ -343,7 +343,7 @@ Bins.prototype.selectStreetNumber = function(n){
 	this.address = this.premises[this.street].numbers[n].n+' '+this.premises[this.street].street+', '+this.premises[this.street].locality;
 	this.clearResults();
 	S('#locate').css({'display':'none'});
-	S('#results').css({'display':'block'}).html('<h3>'+this.address+this.svg.edit+'</h3>');
+	S('#results').css({'display':'block'}).html('<h3>'+this.address+this.svg.edit+'</h3><div class="spinner"><div class="rect1 c14-bg"></div><div class="rect2 c14-bg"></div><div class="rect3 c14-bg"></div><div class="rect4 c14-bg"></div><div class="rect5 c14-bg"></div></div>');
 	S('#results h3').on('click',function(e){
 		S('#results').html('').css({'display':'none'});
 		S('#locate').css({'display':''});
@@ -441,6 +441,7 @@ Bins.prototype.getCollections = function(id){
 			}
 			html += '</ul>';
 			this.el.output.append(html);
+			this.el.output.find('.spinner').remove();
 		},
 		'error': function(e,attr){
 			this.message('Unable to load collection times',{'id':'collections'});
