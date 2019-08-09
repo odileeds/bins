@@ -145,7 +145,7 @@ a.b1-bg:hover, a.b2-bg:hover, a.b3-bg:hover, a.b4-bg:hover, a.b5-bg:hover, a.b6-
 
 
 header { width: 100%; padding: 0px; text-align: left; font-size: 1em; line-height: 1em; }
-header .banner { background-color: black; color: white; min-height: 4em; background-image: url('banner.jpg'); background-position: center center; background-size: cover; background-repeat: no-repeat; }
+header .banner { background-color: black; color: white; height: 4em; background-image: url('banner.jpg'); background-position: center center; background-size: cover; background-repeat: no-repeat; }
 header nav ul { width: 100%; margin: inherit; }
 header nav li { display: block; }
 header nav li a { line-height: 2em; padding: 1em; text-align: left; transition: line-height: 0.3s ease-in; text-decoration: none; }
@@ -312,4 +312,5 @@ footer { display: none; }
 	header img { max-width: 40%; height: 1.5em; margin-right: 0.5em; }
 	header h1 { font-size: 1em; }
 	header nav li a { line-height: 1em; }
+	header .banner { height: 3em; }
 }
