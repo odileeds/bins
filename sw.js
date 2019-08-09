@@ -4,10 +4,10 @@ self.addEventListener('install', function(e) {
 			return cache.addAll([
 				'/bins/',
 				'/bins/index.html',
-				'/bins/banner.jpg',
-				'/bins/stuquery.js',
-				'/bins/bins.css',
-				'/bins/bins.js',
+				'/bins/resources/banner.jpg',
+				'/bins/resources/stuquery.js',
+				'/bins/resources/bins.css',
+				'/bins/resources/bins.js',
 				'/bins/data/list.json',
 				'/bins/data/leeds/index.csv'
 			]);
