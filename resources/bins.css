@@ -187,7 +187,7 @@ label.hamburger:after { position: absolute; padding: 0.25em; width: 100%; height
 input.hamburger:hover ~ label.hamburger, input.hamburger:checked ~ label.hamburger { background: black; color: white; }
 input.hamburger:checked, input.hamburger:checked + label.hamburger { left: 400px; }
 input.hamburger:checked ~ header { z-index: 10; }
-input.hamburger:checked ~ header > .holder { left: 0px; padding-left: 0px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }
+input.hamburger:checked ~ header > .holder { left: 0px; padding-left: 0px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
 input.hamburger:checked ~ #main, input.hamburger:checked ~ footer { z-index: 0; }
 input.hamburger:checked ~ .bg { display: block; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; background-color: rgba(0,0,0,0.6); }
 .hamburger, header .holder { transition: left 0.3s ease-in; }
