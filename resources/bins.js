@@ -183,7 +183,6 @@ Bins.prototype.init = function(){
 		}).on('keyup',{me:this},function(e){
 
 			e.preventDefault();
-console.log('keyup',e.originalEvent.keyCode)
 			me = e.data.me;
 
 			if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38){
@@ -209,7 +208,6 @@ console.log('keyup',e.originalEvent.keyCode)
 					me.processResult(this.e[0].value);
 				}else{
 					str = this.e[0].value.toUpperCase();
-					console.log(str)
 					if(me.files.length == 0){
 						me.message('The search appears to be broken',{'id':'search'});
 					}else{
