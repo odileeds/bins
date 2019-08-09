@@ -182,11 +182,11 @@ header img { height: 2em; float: left; margin-right: 1em; }
 label.hamburger { background-color: rgba(0,0,0,0.2); }
 label.hamburger .nv { display: none; }
 input.hamburger { z-index: 1005; opacity: 0.01; }
-input.hamburger ~ header > .holder { left: -25%; width: 25%; }
+input.hamburger ~ header > .holder { left: -400px; width: 400px; }
 input.hamburger ~ header nav ul > li { display: block; }
 label.hamburger:after { position: absolute; padding: 0.25em; width: 100%; height: 100%; top: 0px; left: 0px; content:"\2261"; font-size: 2em; text-align: center; line-height: 1.5em; z-index: 1004; }
 input.hamburger:hover ~ label.hamburger, input.hamburger:checked ~ label.hamburger { background: black; color: white; }
-input.hamburger:checked, input.hamburger:checked + label.hamburger { left: 25%; }
+input.hamburger:checked, input.hamburger:checked + label.hamburger { left: 400px; }
 input.hamburger:checked ~ header { z-index: 10; }
 input.hamburger:checked ~ header > .holder { left: 0px; padding-left: 0px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }
 input.hamburger:checked ~ #main, input.hamburger:checked ~ footer { z-index: 0; }
@@ -243,7 +243,19 @@ footer { display: none; }
 	ul.grid li.twocol, { width: 100%; }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 700px) {
+	h1 { line-height: 1em; }
+	ul.grid { margin: 0px; right: 0px; margin-bottom: 1em; margin-left: 0px; }
+	ul.grid li { border-right: 0px; }
+	ul.grid li, ul.grid.twocol li { width: 100%; float: none; }
+	ul.grid li:last-child { margin-bottom: 0px; }
+	ul.grid:last-child { margin-bottom: 0em; }
+	select { width: 100%; }
+	#place { margin-bottom: 0px; }
+	#main .holder { padding: 1em; }
+}
+
+@media only screen and (max-width: 533px) {
 	.hamburger { width: 3em; height: 3em; }
 	label.hamburger::after { line-height: 1em; }
 	input.hamburger:checked, input.hamburger:checked + label.hamburger { left: 75%; }
@@ -252,16 +264,4 @@ footer { display: none; }
 	header img { max-width: 40%; height: 1.5em; margin-right: 0.5em; }
 	header h1 { font-size: 1em; }
 	header nav li a { line-height: 1em; }
-	select { width: 100%; }
-	#place { margin-bottom: 0px; }
-	#main .holder { padding: 1em; }
-}
-
-@media only screen and (max-width: 700px) {
-	h1 { line-height: 1em; }
-	ul.grid { margin: 0px; right: 0px; margin-bottom: 1em; margin-left: 0px; }
-	ul.grid li { border-right: 0px; }
-	ul.grid li, ul.grid.twocol li { width: 100%; float: none; }
-	ul.grid li:last-child { margin-bottom: 0px; }
-	ul.grid:last-child { margin-bottom: 0em; }
 }
