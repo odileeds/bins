@@ -277,17 +277,25 @@ console.log('keyup',e.originalEvent.keyCode)
 	
 	S('header nav a').on('click',{me:this},function(e){
 		e.preventDefault();
-		S('#hamburger')[0].checked = false;
-		var href = S(e.currentTarget).attr('href');
+		var el = S(e.currentTarget);
+		S('header nav a.c14-bg').removeClass('c14-bg');
+		el.addClass('c14-bg');
+
+		var href = el.attr('href');
 		if(href.indexOf('#')==0){
 			S('.screen').css({'display':'none'});
 			S(href).css({'display':'block'});
 		}
 		if(href == "#locate"){
 			e.data.me.clearResults();
-			
 		}
+
+		
+		// Set the location
 		location.href = "#";
+
+		// Close menu
+		S('#hamburger')[0].checked = false;
 	});
 	
 	return this;
