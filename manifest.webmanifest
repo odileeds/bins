@@ -8,8 +8,8 @@
 	"display": "fullscreen",
 	"orientation": "portrait",
 	"orientation": "portrait",
-	"theme_color": "#67E767",
-	"background_color": "#67E767",
+	"theme_color": "#F9BC26",
+	"background_color": "#F9BC26",
 	"serviceworker": {
 		"src": "sw.js",
 		"scope": "/bins/",
