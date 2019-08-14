@@ -1,4 +1,4 @@
-const cacheName = "v1.1.1";
+const cacheName = "v2";
 
 self.addEventListener('install', function(e) {
 	console.log('install ServiceWorker');
