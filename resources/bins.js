@@ -476,7 +476,7 @@ Bins.prototype.notify = function(){
 		var _obj = this;
 		// Wait 10 seconds
 		setTimeout(function(){
-			var notification = new Notification("Put your "+_obj.events[0].bin.toLowerCase()+' bin out',{'body':'There will be a '+_obj.events[0].bin+' collection on '+_obj.events[0].nicedate, 'icon':_obj.events[0].icon,'badge':'https://odileeds.org/resources/images/odileeds.png'});
+			var notification = new Notification("Put your "+_obj.events[0].bin.toLowerCase()+' bin out',{'body':'There will be a '+_obj.events[0].bin+' collection on '+_obj.events[0].nicedate, 'icon':_obj.events[0].icon,'badge':'https://odileeds.org/favicon.ico'});
 			console.log(_obj.events)
 		},10000);
 	}else if(Notification.permission === "default") {
