@@ -34,6 +34,12 @@ function Bins(inp){
 		}).catch(function(error){
 			_obj.log('ERROR','Service worker failed to register with error '+error);
 		});
+		
+		// Handler for messages coming from the service worker
+		navigator.serviceWorker.addEventListener('message',function(event){
+			console.log("Client 1 Received Message: " + event.data,_obj);
+			event.ports[0].postMessage("Client 1 Says 'Hello back!'");
+		});
 	}
 	
 	this.waterCooler = function(txt){

@@ -57,6 +57,20 @@ self.addEventListener('activate', (event) => {
 })
 
 self.addEventListener('message', function (event) {
-	console.log('Received message in Service Worker',event)
-	if(event.data.action === 'skipWaiting') self.skipWaiting();
+	console.log('Received message in Service Worker',event);
+	if (!event.clientId) return;
+
+	const client = await clients.get(event.clientId);
+	if (!client) return;
+
+	// Send a message to the client.
+	send_message_to_client(event,client,"Hey I just got a message");
 });
+
+function send_message_to_client(event, client, msg){
+	// Send a message to the client.
+    client.postMessage({
+      msg: msg,
+      url: event.request.url
+    });
+}
