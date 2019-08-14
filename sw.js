@@ -60,6 +60,7 @@ self.addEventListener('message', function (event) {
 	console.log('Received message in Service Worker',event);
 	
 	function send_message_to_client(event, client, msg){
+		console.log('send_message_to_client');
 		// Send a message to the client.
 		client.postMessage({
 		  msg: msg,
@@ -67,7 +68,9 @@ self.addEventListener('message', function (event) {
 		});
 	}
 
-	event.waitUntil(async function() {
+	event.waitUntil(async function(){
+		console.log('waitUntil');
+
 		// Exit early if we don't have access to the client.
 		// Eg, if it's cross-origin.
 		if (!event.clientId) return;
