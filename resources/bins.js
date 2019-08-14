@@ -468,8 +468,12 @@ Bins.prototype.notify = function(){
 	console.log(Notification.permission)
 	if(Notification.permission === "granted"){
 		// If it's okay let's create a notification
-		var notification = new Notification("Put your "+this.events[0].bin.toLowerCase()+' bin out',{'body':'There will be a '+this.events[0].bin+' collection on '+this.events[0].nicedate, 'icon':this.events[0].icon});
-		console.log(this.events);
+		var _obj = this;
+		// Wait 10 seconds
+		setTimeout(function(){
+			var notification = new Notification("Put your "+_obj.events[0].bin.toLowerCase()+' bin out',{'body':'There will be a '+_obj.events[0].bin+' collection on '+_obj.events[0].nicedate, 'icon':_obj.events[0].icon});
+			console.log(_obj.events)
+		},10000);
 	}else if(Notification.permission === "default") {
 		var _obj = this;
 		// Otherwise, we need to ask the user for permission
