@@ -66,9 +66,9 @@ function Bins(inp){
 		
 	}
 	
-	this.message = function(txt){
-		console.log('posting message '+txt,this);
-		newWorker.postMessage({ action: 'skipWaiting' });
+	this.waterCooler = function(txt){
+		console.log('posting message '+txt,this,newWorker);
+		if(newWorker) newWorker.postMessage({ action: 'skipWaiting', 'txt': txt });
 		return this;
 	}
 	

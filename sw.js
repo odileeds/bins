@@ -57,6 +57,6 @@ self.addEventListener('activate', (event) => {
 })
 
 self.addEventListener('message', function (event) {
-	console.log('message to Service Worker',event)
+	console.log('Received message in Service Worker',event)
 	if(event.data.action === 'skipWaiting') self.skipWaiting();
 });
