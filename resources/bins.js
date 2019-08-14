@@ -30,40 +30,12 @@ function Bins(inp){
 	if('serviceWorker' in navigator){
 		navigator.serviceWorker.register('sw.js',{'scope':'/bins/'}).then(function(registration){
 			console.log('Service worker register',_obj,registration);
+			newWorker = registration;
 			_obj.log('Service worker registered in scope '+registration.scope);
-			
-			registration.addEventListener('updatefound', function(){
-
-				// An updated service worker has appeared in reg.installing!
-				newWorker = registration.installing;
-
-				newWorker.addEventListener('statechange', function(){
-
-					// Has service worker state changed?
-					switch (newWorker.state) {
-						case 'installed':
-							// There is a new service worker available, show the notification
-							if(navigator.serviceWorker.controller) {
-								console.log('A new service worker exists');
-							//	let notification = document.getElementById('notification ');
-							//	notification .className = 'show';
-							}
-							break;
-					}
-				});
-			});
 			
 		}).catch(function(error){
 			_obj.log('ERROR','Service worker failed to register with error '+error);
 		});
-		// Do we need to reload the page?
-		let refreshing;
-		navigator.serviceWorker.addEventListener('controllerchange', function(){
-			if(refreshing) return;
-			window.location.reload();
-			refreshing = true;
-		});
-		
 	}
 	
 	this.waterCooler = function(txt){
