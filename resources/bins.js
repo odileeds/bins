@@ -43,9 +43,10 @@ function Bins(inp){
 		e.userChoice.then(function(outcome) { 
 			console.log(outcome); // either "accepted" or "dismissed"
 		}, function(){ _obj.log('ERROR','Something went wrong with user choice'); }); 
-		showInstallPromotion();
+		//showInstallPromotion();
 	});
 
+	/*
 	var _obj = this;
 	function showInstallPromotion(){
 		if(S('header button').length == 0){
@@ -64,6 +65,7 @@ function Bins(inp){
 			});
 		}
 	}
+	*/
 	
 	// Update network status
 	updateNetworkStatus();
