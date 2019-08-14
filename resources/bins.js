@@ -12,7 +12,7 @@ function Bins(inp){
 	this.index = {'file':'data/leeds/index.csv'};
 	this.logging = (location.search.indexOf('logging=true')>0);
 	this.svg = { 'edit': '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" style="position:relative;top:0.125em;right:-0.5em;" viewBox="0 0 20 20"><title>edit</title><path style="color:black;" d="M16.77 8l1.94-2a1 1 0 0 0 0-1.41l-3.34-3.3a1 1 0 0 0-1.41 0L12 3.23zm-5.81-3.71L1 14.25V19h4.75l9.96-9.96-4.75-4.75z"/></svg>' };
-
+	this.settings = {'notifications':{'ready':false,'enabled':false}};
 
 	this.bins = {
 		'B':{'text':'General waste','cls':'b2-bg','svg':'https://www.leeds.gov.uk/_catalogs/masterpage/public/images/bins_black.svg','url':'https://www.leeds.gov.uk/residents/bins-and-recycling/your-bins/black-bin'},
@@ -30,6 +30,11 @@ function Bins(inp){
 		navigator.serviceWorker.register('sw.js',{'scope':'/bins/'}).then(function(registration){
 			_obj.log('Service worker registered');
 		});
+		if("Notification" in window){
+			navigator.serviceWorker.register('notifications.js',{'scope':'/bins/'}).then(function(swReg){
+				console.log('Registered notifications serviceWorker',swReg,_obj);
+			});
+		}
 	}
 	window.addEventListener('beforeinstallprompt', function(e){
 		_obj.log('beforeinstallprompt');
@@ -471,7 +476,7 @@ Bins.prototype.notify = function(){
 		var _obj = this;
 		// Wait 10 seconds
 		setTimeout(function(){
-			var notification = new Notification("Put your "+_obj.events[0].bin.toLowerCase()+' bin out',{'body':'There will be a '+_obj.events[0].bin+' collection on '+_obj.events[0].nicedate, 'icon':_obj.events[0].icon});
+			var notification = new Notification("Put your "+_obj.events[0].bin.toLowerCase()+' bin out',{'body':'There will be a '+_obj.events[0].bin+' collection on '+_obj.events[0].nicedate, 'icon':_obj.events[0].icon,'badge':'https://odileeds.org/resources/images/odileeds.png'});
 			console.log(_obj.events)
 		},10000);
 	}else if(Notification.permission === "default") {
