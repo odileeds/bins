@@ -23,7 +23,8 @@ self.addEventListener('fetch', function(e) {
 	console.log('fetch '+e.request.url);
 	e.respondWith(
 		caches.match(e.request).then(function(response) {
-			if(response) console.log('Using cached version of e.request');
+			if(response) console.log('Using cached version of '+e.request.url);
+			else console.log('Get resource '+e.request.url);
 			return response || fetch(e.request).then((response) => {
 				// Store result in the cache https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
 				return caches.open('v1').then((cache) => {
