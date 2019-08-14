@@ -1,8 +1,8 @@
 self.addEventListener('install', function(e) {
 	console.log('install ServiceWorker');
-	if("Notification" in window){
-		console.log('has Notification');
-	}
+	//if("Notification" in window){
+	//	console.log('has Notification');
+	//}
 	e.waitUntil(
 		caches.open('video-store').then(function(cache) {
 			return cache.addAll([
