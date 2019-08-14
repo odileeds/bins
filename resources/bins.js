@@ -28,6 +28,7 @@ function Bins(inp){
 	var _obj = this;
 	if('serviceWorker' in navigator){
 		navigator.serviceWorker.register('sw.js',{'scope':'/bins/'}).then(function(registration){
+			console.log('Service worker register',_obj,registration);
 			_obj.log('Service worker registered');
 		});
 		if("Notification" in window){
