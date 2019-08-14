@@ -29,7 +29,9 @@ function Bins(inp){
 	if('serviceWorker' in navigator){
 		navigator.serviceWorker.register('sw.js',{'scope':'/bins/'}).then(function(registration){
 			console.log('Service worker register',_obj,registration);
-			_obj.log('Service worker registered');
+			_obj.log('Service worker registered in scope '+registration.scope);
+		}).catch(function(error){
+			_obj.log('ERROR','Service worker failed to register with error '+error);
 		});
 	}
 	window.addEventListener('beforeinstallprompt', function(e){
@@ -38,30 +40,9 @@ function Bins(inp){
 		deferredPrompt = e;
 		e.userChoice.then(function(outcome) { 
 			console.log(outcome); // either "accepted" or "dismissed"
-		}, function(){ _obj.log('ERROR','Something went wrong with user choice'); }); 
-		//showInstallPromotion();
+		}, function(){ _obj.log('ERROR','Something went wrong with user choice'); });
 	});
 
-	/*
-	var _obj = this;
-	function showInstallPromotion(){
-		if(S('header button').length == 0){
-			_obj.message('<button id="install">Save as app</button>',{'id':'app'});
-			S('#install').on('click',function(e){
-				deferredPrompt.prompt();
-				// Wait for the user to respond to the prompt
-				deferredPrompt.userChoice.then((choiceResult) => {
-					if (choiceResult.outcome === 'accepted') {
-						_obj.log('User accepted the A2HS prompt');
-					} else {
-						_obj.log('User dismissed the A2HS prompt');
-					}
-					deferredPrompt = null;
-				});
-			});
-		}
-	}
-	*/
 	
 	// Update network status
 	updateNetworkStatus();
