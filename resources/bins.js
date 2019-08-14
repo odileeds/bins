@@ -137,6 +137,7 @@ Bins.prototype.init = function(){
 		S('#hamburger')[0].checked = false;
 	});
 
+	this.el.input.html('');
 	if(this.el.input.find('.typeahead').length == 0){
 
 		this.el.input.append('<div class="placesearch"><div class="submit" href="#" title="Enter street name" role="button" aria-label="Enter street name"></div><form class="placeform layersearch pop-left" action="search" method="GET" autocomplete="off"><label for="place">Enter street name</label><input class="place" name="place" value="" placeholder="Enter street name" type="text" /><div class="searchresults"></div></div></form>');
