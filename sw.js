@@ -58,19 +58,30 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('message', function (event) {
 	console.log('Received message in Service Worker',event);
-	if (!event.clientId) return;
+	
+	function send_message_to_client(event, client, msg){
+		// Send a message to the client.
+		client.postMessage({
+		  msg: msg,
+		  url: event.request.url
+		});
+	}
 
-	const client = await clients.get(event.clientId);
-	if (!client) return;
+	event.waitUntil(async function() {
+		// Exit early if we don't have access to the client.
+		// Eg, if it's cross-origin.
+		if (!event.clientId) return;
 
-	// Send a message to the client.
-	send_message_to_client(event,client,"Hey I just got a message");
+		// Get the client.
+		const client = await clients.get(event.clientId);
+		// Exit early if we don't get the client.
+		// Eg, if it closed.
+		if (!client) return;
+
+		// Send a message to the client.
+		send_message_to_client(event,client,"Hey I just got a message");
+
+	}());
+
 });
 
-function send_message_to_client(event, client, msg){
-	// Send a message to the client.
-    client.postMessage({
-      msg: msg,
-      url: event.request.url
-    });
-}
