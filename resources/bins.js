@@ -432,6 +432,7 @@ Bins.prototype.getCollections = function(id){
 			}
 			html = '<ul class="grid">';
 			now = new Date();
+			this.events = [];	// Clear any existing events
 			for(i = 0; i < found.length; i+=5){
 				t = found.substr(i+4,1);
 				d = "20"+parseInt(found.substr(i,4),36);
@@ -439,16 +440,44 @@ Bins.prototype.getCollections = function(id){
 				d = new Date(d);
 				if(d >= now){
 					html += '<li><a href="'+this.bins[t].url+'" class="'+this.bins[t].cls+'"><img src="'+this.bins[t].svg+'" class="bin" alt="'+this.bins[t].text+' bin" /><h2>'+this.bins[t].text+'</h2><time datetime="'+d.toISOString()+'">'+formatDate(d)+'</time></a></li>';
+					this.events.push({'date':d,'url':this.bins[t].url,'bin':this.bins[t].text,'nicedate':formatDate(d),'icon':this.bins[t].svg});
 				}
 			}
 			html += '</ul>';
+			if("Notification" in window && location.href.indexOf('debug=true')>=0) html += '<button id="make-notifications" class="c14-bg">Notify me</button>';
+
 			this.el.output.append(html);
 			this.el.output.find('.spinner').remove();
+
+			if("Notification" in window){
+				S('#make-notifications').on('click',{me:this},function(e){
+					console.log('notify');
+					e.data.me.notify();
+				});
+			}
+
 		},
 		'error': function(e,attr){
 			this.message('Unable to load collection times',{'id':'collections'});
 		}
 	});
+	return this;
+}
+
+Bins.prototype.notify = function(){
+	console.log(Notification.permission)
+	if(Notification.permission === "granted"){
+		// If it's okay let's create a notification
+		var notification = new Notification("Put your "+this.events[0].bin.toLowerCase()+' bin out',{'body':'There will be a '+this.events[0].bin+' collection on '+this.events[0].nicedate, 'icon':this.events[0].icon});
+		console.log(this.events);
+	}else if(Notification.permission === "default") {
+		var _obj = this;
+		// Otherwise, we need to ask the user for permission
+		Notification.requestPermission().then(function (permission) {
+			// If the user accepts, let's create a notification
+			if(permission === "granted") _obj.notify();
+		});
+	}
 	return this;
 }
 
