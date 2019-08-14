@@ -31,11 +31,6 @@ function Bins(inp){
 			console.log('Service worker register',_obj,registration);
 			_obj.log('Service worker registered');
 		});
-		if("Notification" in window){
-			navigator.serviceWorker.register('notifications.js',{'scope':'/bins/'}).then(function(swReg){
-				console.log('Registered notifications serviceWorker',swReg,_obj);
-			});
-		}
 	}
 	window.addEventListener('beforeinstallprompt', function(e){
 		_obj.log('beforeinstallprompt');
