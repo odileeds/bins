@@ -1,2 +1,3 @@
-# bins
-Search for bin collection dates
+# Leeds bin dates
+
+A progressive web app to search for bin collection dates.
