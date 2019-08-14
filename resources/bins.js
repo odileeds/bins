@@ -32,12 +32,12 @@ function Bins(inp){
 			console.log('Service worker register',_obj,registration);
 			_obj.log('Service worker registered in scope '+registration.scope);
 			
-			registration.addEventListener('updatefound', () => {
+			registration.addEventListener('updatefound', function(){
 
 				// An updated service worker has appeared in reg.installing!
 				newWorker = reg.installing;
 
-				newWorker.addEventListener('statechange', () => {
+				newWorker.addEventListener('statechange', function(){
 
 					// Has service worker state changed?
 					switch (newWorker.state) {
