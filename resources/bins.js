@@ -26,14 +26,51 @@ function Bins(inp){
 	/* Set up the Service Worker */
 	let deferredPrompt;
 	var _obj = this;
+	let newWorker;
 	if('serviceWorker' in navigator){
 		navigator.serviceWorker.register('sw.js',{'scope':'/bins/'}).then(function(registration){
 			console.log('Service worker register',_obj,registration);
 			_obj.log('Service worker registered in scope '+registration.scope);
+			
+			registration.addEventListener('updatefound', () => {
+
+				// An updated service worker has appeared in reg.installing!
+				newWorker = reg.installing;
+
+				newWorker.addEventListener('statechange', () => {
+
+					// Has service worker state changed?
+					switch (newWorker.state) {
+						case 'installed':
+							// There is a new service worker available, show the notification
+							if(navigator.serviceWorker.controller) {
+								let notification = document.getElementById('notification ');
+								notification .className = 'show';
+							}
+							break;
+					}
+				});
+			});
+			
 		}).catch(function(error){
 			_obj.log('ERROR','Service worker failed to register with error '+error);
 		});
+		// Do we need to reload the page?
+		let refreshing;
+		navigator.serviceWorker.addEventListener('controllerchange', function(){
+			if(refreshing) return;
+			window.location.reload();
+			refreshing = true;
+		});
+		
 	}
+	
+	this.message = function(txt){
+		console.log('posting message '+txt,this);
+		newWorker.postMessage({ action: 'skipWaiting' });
+		return this;
+	}
+	
 	window.addEventListener('beforeinstallprompt', function(e){
 		_obj.log('beforeinstallprompt');
 		// Stash the event so it can be triggered later.

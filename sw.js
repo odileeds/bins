@@ -1,8 +1,9 @@
+const cacheName = "v1.1";
 
 self.addEventListener('install', function(e) {
 	console.log('install ServiceWorker');
 	e.waitUntil(
-		caches.open('v1').then(function(cache) {
+		caches.open(cacheName).then(function(cache) {
 			return cache.addAll([
 				'/bins/',
 				'/bins/index.html',
@@ -27,7 +28,7 @@ self.addEventListener('fetch', function(e) {
 			else console.log('Get resource '+e.request.url);
 			return response || fetch(e.request).then((response) => {
 				// Store result in the cache https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
-				return caches.open('v1').then((cache) => {
+				return caches.open(cacheName).then((cache) => {
 					cache.put(event.request, response.clone());
 					return response;
 				});  
@@ -39,7 +40,7 @@ self.addEventListener('fetch', function(e) {
 });
 
 self.addEventListener('activate', (event) => {
-	let cacheWhitelist = ['v1'] // the name of the new cache
+	let cacheWhitelist = [cacheName] // the name of the new cache
 
 	event.waitUntil(
 		caches.keys().then (cacheNames => {
@@ -55,3 +56,7 @@ self.addEventListener('activate', (event) => {
 	)
 })
 
+self.addEventListener('message', function (event) {
+	console.log('message to Service Worker',event)
+	if(event.data.action === 'skipWaiting') self.skipWaiting();
+});
