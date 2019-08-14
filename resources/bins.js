@@ -37,7 +37,7 @@ function Bins(inp){
 	}
 	
 	this.waterCooler = function(txt){
-		console.log('posting message '+txt,this,newWorker);
+		console.log('posting message '+txt,this,navigator.serviceWorker.controller);
 		if(navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage({ action: 'skipWaiting', 'txt': txt });
 		return this;
 	}
