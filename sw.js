@@ -12,7 +12,6 @@ self.addEventListener('install', function(e) {
 				'/bins/resources/stuquery.js',
 				'/bins/resources/bins.css',
 				'/bins/resources/bins.js',
-				'/bins/resources/notifications.js',
 				'/bins/data/list.json',
 				'/bins/data/leeds/index.csv'
 			]);
