@@ -26,11 +26,9 @@ function Bins(inp){
 	/* Set up the Service Worker */
 	let deferredPrompt;
 	var _obj = this;
-	let newWorker;
 	if('serviceWorker' in navigator){
 		navigator.serviceWorker.register('sw.js',{'scope':'/bins/'}).then(function(registration){
 			console.log('Service worker register',_obj,registration);
-			newWorker = registration;
 			_obj.log('Service worker registered in scope '+registration.scope);
 			
 		}).catch(function(error){
@@ -40,7 +38,7 @@ function Bins(inp){
 	
 	this.waterCooler = function(txt){
 		console.log('posting message '+txt,this,newWorker);
-		if(newWorker) newWorker.postMessage({ action: 'skipWaiting', 'txt': txt });
+		if(navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage({ action: 'skipWaiting', 'txt': txt });
 		return this;
 	}
 	
