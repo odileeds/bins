@@ -74,9 +74,13 @@ self.addEventListener('message', function (event) {
 		// Exit early if we don't have access to the client.
 		// Eg, if it's cross-origin.
 		if (!event.clientId) return;
+		
+		console.log('clientId',event.clientId);
 
 		// Get the client.
 		const client = await clients.get(event.clientId);
+		
+		console.log(client);
 		// Exit early if we don't get the client.
 		// Eg, if it closed.
 		if (!client) return;
