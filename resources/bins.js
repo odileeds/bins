@@ -44,8 +44,9 @@ function Bins(inp){
 						case 'installed':
 							// There is a new service worker available, show the notification
 							if(navigator.serviceWorker.controller) {
-								let notification = document.getElementById('notification ');
-								notification .className = 'show';
+								console.log('A new service worker exists');
+							//	let notification = document.getElementById('notification ');
+							//	notification .className = 'show';
 							}
 							break;
 					}
