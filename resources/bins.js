@@ -38,7 +38,7 @@ function Bins(inp){
 		// Handler for messages coming from the service worker
 		navigator.serviceWorker.addEventListener('message',function(event){
 			console.log("Client 1 Received Message: " + event.data,_obj);
-			event.ports[0].postMessage("Client 1 Says 'Hello back!'");
+			//event.ports[0].postMessage("Client 1 Says 'Hello back!'");
 		});
 	}
 	
