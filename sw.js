@@ -1,3 +1,4 @@
+
 self.addEventListener('install', function(e) {
 	console.log('install ServiceWorker');
 	e.waitUntil(
@@ -35,4 +36,21 @@ self.addEventListener('fetch', function(e) {
 		})
 	);
 });
+
+self.addEventListener('activate', (event) => {
+	let cacheWhitelist = ['v1'] // the name of the new cache
+
+	event.waitUntil(
+		caches.keys().then (cacheNames => {
+			return Promise.all(
+				cacheNames.map( cacheName => {
+					/* Deleting all the caches except the ones that are in cacheWhitelist array */
+					if (cacheWhitelist.indexOf(cacheName) === -1) {
+						return caches.delete(cacheName)
+					}
+				})
+			)
+		})
+	)
+})
 
