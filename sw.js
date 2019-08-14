@@ -1,8 +1,5 @@
 self.addEventListener('install', function(e) {
 	console.log('install ServiceWorker');
-	//if("Notification" in window){
-	//	console.log('has Notification');
-	//}
 	e.waitUntil(
 		caches.open('video-store').then(function(cache) {
 			return cache.addAll([
@@ -19,6 +16,8 @@ self.addEventListener('install', function(e) {
 	);
 });
 
+/* Evaluates the fetch request and checks to see if it is in the cache.
+   The response is passed back to the webpage via event.respondWith() */
 self.addEventListener('fetch', function(e) {
 	console.log('fetch '+e.request.url);
 	e.respondWith(
