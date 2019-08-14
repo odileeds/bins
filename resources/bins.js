@@ -35,7 +35,7 @@ function Bins(inp){
 			registration.addEventListener('updatefound', function(){
 
 				// An updated service worker has appeared in reg.installing!
-				newWorker = reg.installing;
+				newWorker = registration.installing;
 
 				newWorker.addEventListener('statechange', function(){
 
