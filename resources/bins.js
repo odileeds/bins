@@ -507,7 +507,6 @@ Bins.prototype.getCollections = function(id){
 
 Bins.prototype.notify = function(attr){
 	console.log('Notification permission ',Notification.permission)
-	this.message('Adding delayed notification '+Notification.permission);
 	if(Notification.permission === "granted"){
 		// If it's okay let's create a notification
 		var _obj = this;
