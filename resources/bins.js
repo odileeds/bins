@@ -516,7 +516,7 @@ Bins.prototype.getCollections = function(id){
 			for(i = 0; i < found.length; i+=5){
 				t = found.substr(i+4,1);
 				d = "20"+parseInt(found.substr(i,4),36);
-				d = d.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/,function(m,p1,p2,p3){ return p1+"-"+p2+"-"+p3+"T08:00Z"; });
+				d = d.replace(/([0-9]{4})([0-9]{2})([0-9]{2})/,function(m,p1,p2,p3){ return p1+"-"+p2+"-"+p3+"T08:00"; });
 				d = new Date(d);
 				if(d >= now){
 					html += '<li><a href="'+this.bins[t].url+'" class="'+this.bins[t].cls+'"><img src="'+this.bins[t].svg+'" class="bin" alt="'+this.bins[t].text+' bin" /><h2>'+this.bins[t].text+'</h2><time datetime="'+d.toISOString()+'">'+formatDate(d)+'</time></a></li>';
