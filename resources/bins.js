@@ -39,48 +39,27 @@ function Bins(inp){
 	
 		// Handler for messages coming from the service worker
 		navigator.serviceWorker.addEventListener('message', function handler(e){
-			if(e.source !== _obj.worker) {
-				return;
-			}
+			if(e.source !== _obj.worker) return;
 			console.log('heard',e.data);
 			if(e.data.command == "getAddress" && e.data.address){
-				console.log('process address bits here',e.data.address);
 				_obj.address = e.data.address;
 				_obj.el.input.find('#place-street')[0].value = _obj.address.streetname+', '+_obj.address.locality;
 				_obj.processStreet(function(){
 					if(this.el.input.find('.searchresults li').length==1){
 						i = parseInt(this.el.input.find('.searchresults li').attr('data-id'));
-						console.log('unique',i,this.premises);
 						if(this.premises[i].street == this.address.streetname && this.premises[i].locality == this.address.locality){
-							console.log('found');
 							this.selectStreet(i);
 							this.el.input.find('#place-number')[0].value = _obj.address.number;
 							this.processNumber(function(){
 								if(this.el.input.find('.searchresults li').length==1){
 									i = this.address.street;
 									n = parseInt(this.el.input.find('.searchresults li').attr('data-n'));
-									if(this.address.street==i && this.address.n==n){
-										console.log('found',i,n,this.address);
-										this.selectStreetNumber(n);
-									}
-									/*
-									console.log('unique',i,this.premises);
-									if(this.premises[i].street == this.address.streetname && this.premises[i].locality == this.address.locality){
-										console.log('found');
-										this.selectStreet(i);
-										this.el.input.find('#place-number')[0].value = _obj.address.number;
-										this.processNumber();
-									}*/
+									if(this.address.street==i && this.address.n==n) this.selectStreetNumber(n);
 								}
-								
 							});
 						}
 					}
-					
 				});
-				
-				//this.getCollections(this.premises[this.address.street].numbers[this.n].id);
-				// BLAH
 			}
 		});
 	}
@@ -192,7 +171,7 @@ Bins.prototype.init = function(){
 	this.el.input.html('');
 	if(this.el.input.find('.typeahead').length == 0){
 
-		this.el.input.append('<div class="placesearch"><div class="submit" href="#" title="Enter street name" role="button" aria-label="Enter street name"></div><form class="placeform layersearch pop-left" action="search" method="GET" autocomplete="off"><label for="place-street">Enter street name</label><input class="place" id="place-street" name="place-street" value="" placeholder="Enter street name" type="text" /><label for="place-number">Enter house name/number</label><input class="place" id="place-number" name="place-number" value="" placeholder="Enter house name or number" type="text" /><div class="searchresults"></div></div></form>');
+		this.el.input.append('<div class="placesearch"><div class="submit" href="#" title="Enter street name" role="button" aria-label="Enter street name"></div><form class="placeform layersearch pop-left" action="search" method="GET" autocomplete="off"><label for="place-street" class="place-street">Enter street name</label><input class="place-street" id="place-street" name="place-street" value="" placeholder="Enter street name" type="text" /><label for="place-number" class="place-number">Enter house name/number</label><input class="place-number" id="place-number" name="place-number" value="" placeholder="Enter house name or number" type="text" /><div class="searchresults"></div></div></form>');
 
 		var el = this.el.input.find('.placesearch');
 		var focus = false;
@@ -234,31 +213,21 @@ Bins.prototype.init = function(){
 
 			e.preventDefault();
 			me = e.data.me;
-console.log('keyup on street')
-			if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38){
-				searchResultsSelect(e.originalEvent.keyCode);
-			}else if(e.originalEvent.keyCode==13){
-				me.selectStreet(el.find('.searchresults .selected').attr('data-id'));
-			}else{
-				me.processStreet();
-			}
+
+			if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38) searchResultsSelect(e.originalEvent.keyCode);
+			else if(e.originalEvent.keyCode==13) me.selectStreet(el.find('.searchresults .selected').attr('data-id'));
+			else me.processStreet();
 		});
 		
-		el.find('#place-number').css({'display':'none'}).on('keyup',{me:this},function(e){
-console.log('keyup on number')
+		el.find('.place-number').css({'display':'none'});
+		el.find('#place-number').on('keyup',{me:this},function(e){
 
 			e.preventDefault();
 			me = e.data.me;
 
-			if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38){
-				// Down=40
-				// Up=38
-				searchResultsSelect(e.originalEvent.keyCode);
-			}else if(e.originalEvent.keyCode==13){
-				me.selectStreetNumber(el.find('.searchresults .selected').attr('data-n'));
-			}else{
-				me.processNumber();
-			}
+			if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38) searchResultsSelect(e.originalEvent.keyCode);
+			else if(e.originalEvent.keyCode==13) me.selectStreetNumber(el.find('.searchresults .selected').attr('data-n'));
+			else me.processNumber();
 		});
 	}
 	
@@ -315,9 +284,9 @@ Bins.prototype.selectStreet = function(i){
 			e.data.me.selectStreetNumber(n);
 		});
 	}
-	this.el.input.find('label').html('Enter house name or number');
-	this.el.input.find('#place-street').css({'display':'none'});
-	this.el.input.find('#place-number').css({'display':''})[0].focus();
+	this.el.input.find('.place-street').css({'display':'none'});
+	this.el.input.find('.place-number').css({'display':''});
+	this.el.input.find('#place-number')[0].focus();
 	if(this.el.input.find('#place-number')[0].value!="") this.processNumber();
 
 	return this;
@@ -489,8 +458,8 @@ Bins.prototype.getCollections = function(id){
 		e.data.me.clearResults();
 		S('#results').html('').css({'display':'none'});
 		S('#locate').css({'display':''});
-		S('#place-number').css({'display':'none'});
-		S('#place-street').css({'display':''});
+		S('.place-number').css({'display':'none'});
+		S('.place-street').css({'display':''});
 		S('#place-street')[0].focus();
 		e.data.me.processStreet();
 		
