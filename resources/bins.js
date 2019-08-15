@@ -134,7 +134,6 @@ Bins.prototype.log = function(){
 
 Bins.prototype.getIndex = function(){
 	if(this.index.loading || this.index.loaded) return this;
-	this.message('Loading index...',{'id':'index'});
 	this.index.loading = true;
 	S().ajax(this.index.file,{
 		"dataType": "text",
@@ -150,6 +149,7 @@ Bins.prototype.getIndex = function(){
 				}
 			}
 			this.message('',{'id':'index'});
+			this.el.input.find('.spinner').remove();
 			this.getAddress();
 		},
 		"error": function(e,attr){
