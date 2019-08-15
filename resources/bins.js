@@ -457,10 +457,12 @@ Bins.prototype.getCollections = function(id){
 	n = 1000;
 	r = Math.floor(id/n)*1000;
 	S().ajax(this.files[this.filefound].jobs,{
-		'dataType':'text',
-		'this':this,
-		'id':id,
-		'success':function(d){
+		'dataType': 'text',
+		'this': this,
+		'cache': false,
+		'id': id,
+		'success': function(d,attr){
+			this.files[this.filefound].jobs.data = CSVToArray(d);
 			var rows = CSVToArray(d);
 			var result;
 			var i,d,cols;
