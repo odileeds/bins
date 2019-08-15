@@ -144,7 +144,7 @@ a.b1-bg:hover, a.b2-bg:hover, a.b3-bg:hover, a.b4-bg:hover, a.b5-bg:hover, a.b6-
 
 
 
-header { width: 100%; padding: 0px; text-align: left; font-size: 1em; line-height: 1em; }
+header { position: fixed; z-index: 1000; top: 0; left: 0px; width: 100%; padding: 0px; text-align: left; font-size: 1em; line-height: 1em; }
 header .banner { background-color: black; color: white; height: 4em; background-image: url('banner.jpg'); background-position: center center; background-size: cover; background-repeat: no-repeat; }
 header nav ul { width: 100%; margin: inherit; }
 header nav li { display: block; }
@@ -156,6 +156,7 @@ header nav ul > li.seasonal a:hover, header nav li.seasonal a:focus { background
 header .holder > p { padding: 1em; line-height: 1.5em; }
 header .holder > p a, header .holder > p a:visited { color: inherit; }
 
+#main { padding-top: 4em; }
 /* Main box styling */
 #main .holder { padding: 2em 1em; }
 #main p:last-child, #main figure iframe { margin-bottom: 0; }
@@ -165,32 +166,31 @@ header, footer, #main {
 	transition: margin-left 0.3s ease-in;
 }
 header > .holder {
-	position: absolute;
+	position: fixed;
 	color: black;
 	top: 0px;
 	display: block;
 	bottom: 0px;
-	z-index: 10;
+	overflow-y: auto;
 }
 header .title { padding-left: 4em; }
 header h1 { margin-top: 0em; line-height: 1em; font-weight: bold; }
 header img { height: 2em; float: left; margin-right: 1em; }
 
 .bg { display: none; }
-.hamburger { cursor: pointer; display: block; width: 3em; height: 3em; position: absolute; left: 0px; top: 0px; font-size: 1em; margin: 0px; }
+.hamburger { cursor: pointer; display: block; width: 3em; height: 3em; position: fixed; left: 0px; top: 0px; font-size: 1em; margin: 0px; z-index: 1001; }
 label.hamburger { background-color: rgba(0,0,0,0.05); }
 label.hamburger .nv { display: none; }
 input.hamburger { z-index: 1005; opacity: 0.01; }
-input.hamburger ~ header > .holder { left: -400px; width: 400px; }
+input.hamburger ~ header > .holder { left: -400px; width: 400px; height: 100%; }
 input.hamburger ~ header nav ul > li { display: block; }
 label.hamburger:after { position: absolute; padding: 0.25em; width: 100%; height: 100%; top: 0px; left: 0px; content:"\2261"; font-size: 2em; text-align: center; line-height: 1.5em; z-index: 1004; }
 input.hamburger:hover ~ label.hamburger, input.hamburger:checked ~ label.hamburger { background: black; color: white; }
 input.hamburger:checked, input.hamburger:checked + label.hamburger { left: 400px; }
-input.hamburger:checked ~ header { z-index: 10; }
-input.hamburger:checked ~ header > .holder { left: 0px; padding-left: 0px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
+input.hamburger:checked ~ header > .holder { left: 0px; height: 100%; padding-left: 0px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
 input.hamburger:checked ~ #main, input.hamburger:checked ~ footer { z-index: 0; }
 input.hamburger:checked ~ .bg { display: block; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; background-color: rgba(0,0,0,0.6); }
-.hamburger, header .holder { transition: left 0.3s ease-in; }
+.hamburger, header .holder { transition: left 0.3s ease-in, box-shadow 0.3s ease-in; }
 .hamburger { width: 4em; height: 4em; color: black; display: block; }
 
 
@@ -224,20 +224,19 @@ footer { display: none; }
 
 .message {
 	text-align: center;
-	z-index: 1000;
+	z-index: 999;
 	position: fixed;
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
 	line-height: 1.5em;
 }
-.message > div {
-}
 
 
 @media only screen and (max-width: 1080px) {
 	ul.grid li { width: 50%; }
 	ul.grid li.twocol, { width: 100%; }
+	#main .holder { padding: 1em; }
 }
 
 @media only screen and (max-width: 700px) {
@@ -249,7 +248,6 @@ footer { display: none; }
 	ul.grid:last-child { margin-bottom: 0em; }
 	select { width: 100%; }
 	#place { margin-bottom: 0px; }
-	#main .holder { padding: 1em; }
 }
 
 @media only screen and (max-width: 533px) {
@@ -257,6 +255,8 @@ footer { display: none; }
 	label.hamburger::after { line-height: 1em; }
 	input.hamburger:checked, input.hamburger:checked + label.hamburger { left: 75%; }
 	input.hamburger ~ header > .holder { left: -75%; width: 75%; }
+
+	#main { padding-top: 3em; }
 	header .title { padding-left: 3em; }
 	header img { max-width: 40%; height: 1.5em; margin-right: 0.5em; }
 	header h1 { font-size: 1em; }
