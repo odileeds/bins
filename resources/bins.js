@@ -168,68 +168,62 @@ Bins.prototype.init = function(){
 		S('#hamburger')[0].checked = false;
 	});
 
-	this.el.input.html('');
-	if(this.el.input.find('.typeahead').length == 0){
+	var el = this.el.input.find('.placesearch');
+	var focus = false;
 
-		this.el.input.append('<div class="placesearch"><div class="submit" href="#" title="Enter street name" role="button" aria-label="Enter street name"></div><form class="placeform layersearch pop-left" action="search" method="GET" autocomplete="off"><label for="place-street" class="place-street">Enter street name</label><input class="place-street" id="place-street" name="place-street" value="" placeholder="Enter street name" type="text" /><label for="place-number" class="place-number">Enter house name/number</label><input class="place-number" id="place-number" name="place-number" value="" placeholder="Enter house name or number" type="text" /><div class="searchresults"></div></div></form>');
+	el.find('form').on('submit',function(e){ e.preventDefault(); });
+	el.find('.submit').on('click',function(e){
+		if(!focus) on();
+		else off();
+	});
 
-		var el = this.el.input.find('.placesearch');
-		var focus = false;
-
-		el.find('form').on('submit',function(e){ e.preventDefault(); });
-		el.find('.submit').on('click',function(e){
-			if(!focus) on();
-			else off();
-		});
-
-		function on(){
-			focus = true;
-			el.addClass('typing');
-			el.find('#place-number')[0].focus();
-		}
-		function off(){
-			focus = false;
-			el.removeClass('typing');
-		}
-
-		this.getIndex();
-		
-		function searchResultsSelect(keyCode){
-			var li = el.find('.searchresults li');
-			var s = -1;
-			for(var i = 0; i < li.e.length; i++){
-				if(S(li.e[i]).hasClass('selected')) s = i;
-			}
-			if(keyCode==40) s++;
-			else s--;
-			if(s < 0) s = li.e.length-1;
-			if(s >= li.e.length) s = 0;
-			el.find('.searchresults .selected').removeClass('selected');
-			S(li.e[s]).addClass('selected');
-		}
-
-
-		el.find('#place-street').on('keyup',{me:this},function(e){
-
-			e.preventDefault();
-			me = e.data.me;
-
-			if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38) searchResultsSelect(e.originalEvent.keyCode);
-			else if(e.originalEvent.keyCode==13) me.selectStreet(el.find('.searchresults .selected').attr('data-id'));
-			else me.processStreet();
-		});
-		
-		el.find('.place-number').css({'display':'none'});
-		el.find('#place-number').on('keyup',{me:this},function(e){
-
-			e.preventDefault();
-			me = e.data.me;
-
-			if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38) searchResultsSelect(e.originalEvent.keyCode);
-			else if(e.originalEvent.keyCode==13) me.selectStreetNumber(el.find('.searchresults .selected').attr('data-n'));
-			else me.processNumber();
-		});
+	function on(){
+		focus = true;
+		el.addClass('typing');
+		el.find('#place-number')[0].focus();
 	}
+	function off(){
+		focus = false;
+		el.removeClass('typing');
+	}
+
+	this.getIndex();
+	
+	function searchResultsSelect(keyCode){
+		var li = el.find('.searchresults li');
+		var s = -1;
+		for(var i = 0; i < li.e.length; i++){
+			if(S(li.e[i]).hasClass('selected')) s = i;
+		}
+		if(keyCode==40) s++;
+		else s--;
+		if(s < 0) s = li.e.length-1;
+		if(s >= li.e.length) s = 0;
+		el.find('.searchresults .selected').removeClass('selected');
+		S(li.e[s]).addClass('selected');
+	}
+
+
+	el.find('#place-street').on('keyup',{me:this},function(e){
+
+		e.preventDefault();
+		me = e.data.me;
+
+		if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38) searchResultsSelect(e.originalEvent.keyCode);
+		else if(e.originalEvent.keyCode==13) me.selectStreet(el.find('.searchresults .selected').attr('data-id'));
+		else me.processStreet();
+	});
+	
+	el.find('.place-number').css({'display':'none'});
+	el.find('#place-number').on('keyup',{me:this},function(e){
+
+		e.preventDefault();
+		me = e.data.me;
+
+		if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38) searchResultsSelect(e.originalEvent.keyCode);
+		else if(e.originalEvent.keyCode==13) me.selectStreetNumber(el.find('.searchresults .selected').attr('data-n'));
+		else me.processNumber();
+	});
 	
 	S('header nav a').on('click',{me:this},function(e){
 		e.preventDefault();
@@ -242,9 +236,7 @@ Bins.prototype.init = function(){
 			S('.screen').css({'display':'none'});
 			S(href).css({'display':'block'});
 		}
-		if(href == "#locate"){
-			e.data.me.clearResults();
-		}
+		if(href == "#locate") e.data.me.clearResults();
 
 		// Set the location
 		location.href = "#";
@@ -267,7 +259,6 @@ Bins.prototype.selectStreet = function(i){
 	i = parseInt(i);
 	this.address.street = i;
 	this.clearResults();
-	//this.el.input.find('.place')[0].value = '';
 	var html = '<ol>';
 	for(var n = 0; n < this.premises[i].numbers.length; n++){
 		str = this.premises[i].numbers[n].n+' '+this.premises[i].street+', '+this.premises[i].locality;
@@ -293,10 +284,8 @@ Bins.prototype.selectStreet = function(i){
 }
 
 Bins.prototype.selectStreetNumber = function(n){
-	console.log('selectStreetNumber',n);
 	if(n) this.address.n = (typeof n==="number") ? n : parseInt(n);
 	if(typeof this.address.n==="number"){
-		console.log(this.address.street,this.address.n);
 		this.clearResults();
 		this.getCollections(this.premises[this.address.street].numbers[this.address.n].id);
 		this.setAddress();
@@ -308,7 +297,6 @@ Bins.prototype.processStreet = function(callback){
 	if(!this.index.loaded) return this;
 
 	str = S('#place-street')[0].value.toUpperCase();
-	console.log(str);
 	if(this.files.length == 0){
 		this.message('The search appears to be broken',{'id':'search'});
 	}else{
@@ -379,7 +367,6 @@ Bins.prototype.postProcessStreet = function(name,callback){
 	var html = "";
 	var tmp = [];
 	var str,tmp,i;
-console.log('postProcessStreet',name);
 	if(typeof name==="string" && name.length > 0){
 		name = name.toLowerCase().replace(/[\s\-\,]/g,"");
 		for(i = 0; i < this.premises.length; i++){
@@ -416,7 +403,6 @@ Bins.prototype.processNumber = function(callback){
 	var html = "";
 	var tmp = [];
 	var str,tmp,i;
-console.log('processNumber',name,callback);
 	for(i = 0; i < this.premises[this.address.street].numbers.length; i++){
 		str = this.premises[this.address.street].numbers[i].n.toLowerCase();
 		if(str.indexOf(name) >= 0) tmp.push(i);

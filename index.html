@@ -95,7 +95,16 @@
 
 		<div class="holder">
 			<section id="locate" class="screen">
-				<div class="spinner"><div class="rect1 c14-bg"></div><div class="rect2 c14-bg"></div><div class="rect3 c14-bg"></div><div class="rect4 c14-bg"></div><div class="rect5 c14-bg"></div></div>
+				<div class="placesearch">
+					<div class="submit" href="#" title="Enter street name" role="button" aria-label="Enter street name"></div>
+					<form class="placeform layersearch" action="search" method="GET" autocomplete="off">
+						<label for="place-street" class="place-street">Enter street name</label>
+						<input class="place-street" id="place-street" name="place-street" value="" placeholder="e.g. Meanwood Road, Meanwood" type="text" />
+						<label for="place-number" class="place-number" style="display:none;">Enter house name/number</label>
+						<input id="place-number" name="place-number" class="place-number" style="display:none;" value="" placeholder="e.g. 29, Flat 2, or Airedale House" type="text" />
+						<div class="searchresults"></div>
+					</form>
+				</div>
 			</section>
 			<section id="results" class="screen">
 
@@ -161,11 +170,7 @@
 
 	<footer class="b1-bg">
 		<div class="holder">
-			<p>&copy; 2019 ODI Leeds
-			<br />Processing and visualisation: Stuart Lowe (<a href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>)
-			<br />Local Authority Boundaries: <a href="http://geoportal.statistics.gov.uk/datasets/local-authority-districts-april-2019-boundaries-uk-buc">Local Authority Districts (April 2019) Boundaries UK BUC</a> (OGL v3; Contains National Statistics data &copy; Crown copyright and database right 2019; Contains OS data &copy; Crown copyright and database right 2019)
-			<br />Addresses: Contains Ordnance Survey data © Crown copyright and database right 2018. Contains Royal Mail data © Royal Mail copyright and database right 2018. Contains National Statistics data © Crown copyright and database right 2018.
-			</p>
+			<p>&copy; 2019 ODI Leeds</p>
 		</div>
 	</footer>
 
