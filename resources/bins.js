@@ -483,13 +483,12 @@ Bins.prototype.getCollections = function(id){
 				}
 			}
 			html += '</ul>';
-			//html += '<button id="make-notifications" class="c14-bg">Notify me</button>';
 
 			this.el.output.append(html);
 			this.el.output.find('.spinner').remove();
 
 			if("Notification" in window){
-				this.message('<button id="notifications" class="c14-bg">Notify me</button>',{'id':'notify'});
+				this.message('<button id="notifications" class="c14-bg">Notify me'+(Notification.permission === "default" ? ' (you will be asked to allow notifications first)':'')+'</button>',{'id':'notify'});
 				var _obj = this;
 				S('#notifications').on('click',{me:this},function(e){
 					console.log('notify');
