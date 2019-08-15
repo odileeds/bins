@@ -219,6 +219,8 @@ footer { display: none; }
 .questions > li { margin-bottom: 1em; }
 .questions > li:last-child { margin-bottom: 0em; }
 
+#notifications { width: 100%; line-height: 2em; }
+#notifications:hover, #notifications:focus { background-color: black; color: white; }
 
 .message {
 	text-align: center;
@@ -230,7 +232,6 @@ footer { display: none; }
 	line-height: 1.5em;
 }
 .message > div {
-	margin: 0.25em;
 }
 
 

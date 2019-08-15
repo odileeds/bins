@@ -442,6 +442,10 @@ Bins.prototype.getCollections = function(id){
 	S('#results h3').on('click',{me:this},function(e){
 		
 		e.data.me.clearResults();
+		// Clear messages
+		e.data.me.message('',{'id':'default'});
+		e.data.me.message('',{'id':'notify'});
+
 		S('#results').html('').css({'display':'none'});
 		S('#locate').css({'display':''});
 		S('.place-number').css({'display':'none'});
@@ -479,16 +483,18 @@ Bins.prototype.getCollections = function(id){
 				}
 			}
 			html += '</ul>';
-			html += '<button id="make-notifications" class="c14-bg">Notify me</button>';
+			//html += '<button id="make-notifications" class="c14-bg">Notify me</button>';
 
 			this.el.output.append(html);
 			this.el.output.find('.spinner').remove();
 
 			if("Notification" in window){
+				this.message('<button id="notifications" class="c14-bg">Notify me</button>',{'id':'notify'});
 				var _obj = this;
-				S('#make-notifications').on('click',{me:this},function(e){
+				S('#notifications').on('click',{me:this},function(e){
 					console.log('notify');
 					e.data.me.notify({ 'command': 'reminders', 'events': _obj.events});
+					e.data.me.message('',{'id':'notify'});
 				});
 			}
 
