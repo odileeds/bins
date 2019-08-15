@@ -9,6 +9,7 @@ function Bins(inp){
 	this.version = "0.1";
 	this.premises = [];
 	this.files = [];
+	this.address = {};
 	this.index = {'file':'data/leeds/index.csv'};
 	this.logging = (location.search.indexOf('logging=true')>0);
 	this.svg = { 'edit': '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" style="position:relative;top:0.125em;right:-0.5em;" viewBox="0 0 20 20"><title>edit</title><path style="color:black;" d="M16.77 8l1.94-2a1 1 0 0 0 0-1.41l-3.34-3.3a1 1 0 0 0-1.41 0L12 3.23zm-5.81-3.71L1 14.25V19h4.75l9.96-9.96-4.75-4.75z"/></svg>' };
@@ -25,27 +26,63 @@ function Bins(inp){
 
 	/* Set up the Service Worker */
 	let deferredPrompt;
+	this.worker;
 	var _obj = this;
 	if('serviceWorker' in navigator){
 		navigator.serviceWorker.register('sw.js',{'scope':'/bins/'}).then(function(registration){
-			console.log('Service worker register',_obj,registration);
-			_obj.log('Service worker registered in scope '+registration.scope);
-			
+			console.log('Service worker registration',_obj,registration);
+			_obj.worker = (registration.installing || registration.active);
+			_obj.log('Service worker registered in scope '+registration.scope);		
 		}).catch(function(error){
 			_obj.log('ERROR','Service worker failed to register with error '+error);
 		});
-		
-		// Handler for messages coming from the service worker
-		navigator.serviceWorker.addEventListener('message',function(event){
-			console.log("Client 1 Received Message: " + event.data,_obj);
-			//event.ports[0].postMessage("Client 1 Says 'Hello back!'");
-		});
-	}
 	
-	this.waterCooler = function(txt){
-		console.log('posting message '+txt,this,navigator.serviceWorker.controller);
-		if(navigator.serviceWorker.controller) navigator.serviceWorker.controller.postMessage({ action: 'skipWaiting', 'txt': txt });
-		return this;
+		// Handler for messages coming from the service worker
+		navigator.serviceWorker.addEventListener('message', function handler(e){
+			if(e.source !== _obj.worker) {
+				return;
+			}
+			console.log('heard',e.data);
+			if(e.data.command == "getAddress" && e.data.address){
+				console.log('process address bits here',e.data.address);
+				_obj.address = e.data.address;
+				_obj.el.input.find('#place-street')[0].value = _obj.address.streetname+', '+_obj.address.locality;
+				_obj.processStreet(function(){
+					if(this.el.input.find('.searchresults li').length==1){
+						i = parseInt(this.el.input.find('.searchresults li').attr('data-id'));
+						console.log('unique',i,this.premises);
+						if(this.premises[i].street == this.address.streetname && this.premises[i].locality == this.address.locality){
+							console.log('found');
+							this.selectStreet(i);
+							this.el.input.find('#place-number')[0].value = _obj.address.number;
+							this.processNumber(function(){
+								if(this.el.input.find('.searchresults li').length==1){
+									i = this.address.street;
+									n = parseInt(this.el.input.find('.searchresults li').attr('data-n'));
+									if(this.address.street==i && this.address.n==n){
+										console.log('found',i,n,this.address);
+										this.selectStreetNumber(n);
+									}
+									/*
+									console.log('unique',i,this.premises);
+									if(this.premises[i].street == this.address.streetname && this.premises[i].locality == this.address.locality){
+										console.log('found');
+										this.selectStreet(i);
+										this.el.input.find('#place-number')[0].value = _obj.address.number;
+										this.processNumber();
+									}*/
+								}
+								
+							});
+						}
+					}
+					
+				});
+				
+				//this.getCollections(this.premises[this.address.street].numbers[this.n].id);
+				// BLAH
+			}
+		});
 	}
 	
 	window.addEventListener('beforeinstallprompt', function(e){
@@ -134,6 +171,7 @@ Bins.prototype.getIndex = function(){
 				}
 			}
 			this.message('',{'id':'index'});
+			this.getAddress();
 		},
 		"error": function(e,attr){
 			this.log('ERROR','Unable to load '+attr.url);
@@ -154,7 +192,7 @@ Bins.prototype.init = function(){
 	this.el.input.html('');
 	if(this.el.input.find('.typeahead').length == 0){
 
-		this.el.input.append('<div class="placesearch"><div class="submit" href="#" title="Enter street name" role="button" aria-label="Enter street name"></div><form class="placeform layersearch pop-left" action="search" method="GET" autocomplete="off"><label for="place">Enter street name</label><input class="place" name="place" value="" placeholder="Enter street name" type="text" /><div class="searchresults"></div></div></form>');
+		this.el.input.append('<div class="placesearch"><div class="submit" href="#" title="Enter street name" role="button" aria-label="Enter street name"></div><form class="placeform layersearch pop-left" action="search" method="GET" autocomplete="off"><label for="place-street">Enter street name</label><input class="place" id="place-street" name="place-street" value="" placeholder="Enter street name" type="text" /><label for="place-number">Enter house name/number</label><input class="place" id="place-number" name="place-number" value="" placeholder="Enter house name or number" type="text" /><div class="searchresults"></div></div></form>');
 
 		var el = this.el.input.find('.placesearch');
 		var focus = false;
@@ -168,18 +206,46 @@ Bins.prototype.init = function(){
 		function on(){
 			focus = true;
 			el.addClass('typing');
-			el.find('.place')[0].focus();
+			el.find('#place-number')[0].focus();
 		}
 		function off(){
 			focus = false;
 			el.removeClass('typing');
 		}
 
-		el.find('.place').on('focus',{me:this},function(e){
+		this.getIndex();
+		
+		function searchResultsSelect(keyCode){
+			var li = el.find('.searchresults li');
+			var s = -1;
+			for(var i = 0; i < li.e.length; i++){
+				if(S(li.e[i]).hasClass('selected')) s = i;
+			}
+			if(keyCode==40) s++;
+			else s--;
+			if(s < 0) s = li.e.length-1;
+			if(s >= li.e.length) s = 0;
+			el.find('.searchresults .selected').removeClass('selected');
+			S(li.e[s]).addClass('selected');
+		}
 
-			if(e.data.me.files.length == 0) e.data.me.getIndex();
 
-		}).on('keyup',{me:this},function(e){
+		el.find('#place-street').on('keyup',{me:this},function(e){
+
+			e.preventDefault();
+			me = e.data.me;
+console.log('keyup on street')
+			if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38){
+				searchResultsSelect(e.originalEvent.keyCode);
+			}else if(e.originalEvent.keyCode==13){
+				me.selectStreet(el.find('.searchresults .selected').attr('data-id'));
+			}else{
+				me.processStreet();
+			}
+		});
+		
+		el.find('#place-number').css({'display':'none'}).on('keyup',{me:this},function(e){
+console.log('keyup on number')
 
 			e.preventDefault();
 			me = e.data.me;
@@ -187,91 +253,11 @@ Bins.prototype.init = function(){
 			if(e.originalEvent.keyCode==40 || e.originalEvent.keyCode==38){
 				// Down=40
 				// Up=38
-				var li = el.find('.searchresults li');
-				var s = -1;
-				for(var i = 0; i < li.e.length; i++){
-					if(S(li.e[i]).hasClass('selected')) s = i;
-				}
-				if(e.originalEvent.keyCode==40) s++;
-				else s--;
-				if(s < 0) s = li.e.length-1;
-				if(s >= li.e.length) s = 0;
-				el.find('.searchresults .selected').removeClass('selected');
-				S(li.e[s]).addClass('selected');
+				searchResultsSelect(e.originalEvent.keyCode);
 			}else if(e.originalEvent.keyCode==13){
-				if(typeof me.street==="number") me.selectStreetNumber(el.find('.searchresults .selected').attr('data-n'));
-				else me.selectStreet(el.find('.searchresults .selected').attr('data-id'));
+				me.selectStreetNumber(el.find('.searchresults .selected').attr('data-n'));
 			}else{
-				if(!me.index.loaded) return this;
-				if(typeof me.street==="number"){
-					me.processResult(this.e[0].value);
-				}else{
-					str = this.e[0].value.toUpperCase();
-					if(me.files.length == 0){
-						me.message('The search appears to be broken',{'id':'search'});
-					}else{
-						me.message('',{'id':'search'});
-						var found = -1;
-						var str_lo = str;
-						var str_hi = str;
-						
-						if(str.length > 3){
-							str_lo = str.substr(0,3);
-							str_hi = str.substr(0,3);
-						}
-						while(str_lo.length < 3) str_lo += 'A';
-						while(str_hi.length < 3) str_hi += 'Z';
-
-						for(var i = 0 ; i < me.files.length; i++){
-							if(str_lo >= me.files[i].from && str_hi <= me.files[i].to){
-								found = i;
-								i = me.files.length;
-							}
-						}
-						if(str.length > 0){
-							if(found >= 0){
-								me.filefound = found;
-								// Check if the data has already been loaded
-								if(!me.files[found].loading && !me.files[found].loaded){
-									me.files[found].loading = true;
-									S().ajax(me.files[found].file,{
-										'dataType':'text',
-										'this': me,
-										'i': found,
-										'str': str,
-										'success': function(d,attr){
-											delete me.files[found].loading;
-											me.files[found].loaded = true;
-											this.files[attr.i].loaded = true;
-											this.files[attr.i].data = d.split(/[\n\r]/);
-											var cols,i,n,data;
-											for(i = 0; i < this.files[attr.i].data.length; i++){
-												cols = this.files[attr.i].data[i].split(/\t/);
-												if(cols.length == 6){
-													data = {'street':cols[0],'locality':cols[1],'postcode':cols[2],'lat':parseFloat(cols[3]),'lon':parseFloat(cols[4]),'numbers':cols[5].split(/;/)};
-													for(n = 0 ; n < data.numbers.length; n++){
-														cols = data.numbers[n].split(/:/);
-														data.numbers[n] = {'n':cols[0],'id':parseInt(cols[1], 36)};
-													}
-													this.premises.push(data);
-												}
-											}
-											this.processResult(attr.str);
-										},
-										'error': function(e,attr){
-											this.message('Unable to load streets');
-										}
-									});
-								}else{
-									me.processResult(str);
-								}
-							}
-						}else{
-							me.clearResults();
-						}
-					}
-				}
-				if(!str) me.clearResults();
+				me.processNumber();
 			}
 		});
 	}
@@ -291,7 +277,6 @@ Bins.prototype.init = function(){
 			e.data.me.clearResults();
 		}
 
-		
 		// Set the location
 		location.href = "#";
 
@@ -306,17 +291,14 @@ Bins.prototype.clearResults = function(){
 	// Zap search results
 	this.el.input.find('.searchresults').html('');
 	this.message('',{'id':'premises'});
-	this.el.input.find('.place')[0].value = '';
-	this.el.input.find('.place').attr('placeholder','Enter street name');
-	this.el.input.find('label').html('Enter street name');
 	return this;
 }
 
 Bins.prototype.selectStreet = function(i){
 	i = parseInt(i);
-	this.street = i;
+	this.address.street = i;
 	this.clearResults();
-	this.el.input.find('.place')[0].value = '';
+	//this.el.input.find('.place')[0].value = '';
 	var html = '<ol>';
 	for(var n = 0; n < this.premises[i].numbers.length; n++){
 		str = this.premises[i].numbers[n].n+' '+this.premises[i].street+', '+this.premises[i].locality;
@@ -334,42 +316,115 @@ Bins.prototype.selectStreet = function(i){
 		});
 	}
 	this.el.input.find('label').html('Enter house name or number');
-	this.el.input.find('.place').attr('placeholder','Enter house name or number')[0].focus();
+	this.el.input.find('#place-street').css({'display':'none'});
+	this.el.input.find('#place-number').css({'display':''})[0].focus();
+	if(this.el.input.find('#place-number')[0].value!="") this.processNumber();
 
 	return this;
 }
 
 Bins.prototype.selectStreetNumber = function(n){
-	n = parseInt(n);
-	this.address = this.premises[this.street].numbers[n].n+' '+this.premises[this.street].street+', '+this.premises[this.street].locality;
-	this.clearResults();
-	S('#locate').css({'display':'none'});
-	S('#results').css({'display':'block'}).html('<h3>'+this.address+this.svg.edit+'</h3><div class="spinner"><div class="rect1 c14-bg"></div><div class="rect2 c14-bg"></div><div class="rect3 c14-bg"></div><div class="rect4 c14-bg"></div><div class="rect5 c14-bg"></div></div>');
-	S('#results h3').on('click',function(e){
-		S('#results').html('').css({'display':'none'});
-		S('#locate').css({'display':''});
-	});
-
-	this.getCollections(this.premises[this.street].numbers[n].id);
-	delete this.street;
+	console.log('selectStreetNumber',n);
+	if(n) this.address.n = (typeof n==="number") ? n : parseInt(n);
+	if(typeof this.address.n==="number"){
+		console.log(this.address.street,this.address.n);
+		this.clearResults();
+		this.getCollections(this.premises[this.address.street].numbers[this.address.n].id);
+		this.setAddress();
+	}
 	return this;
 }
 
-Bins.prototype.processResult = function(name){
+Bins.prototype.processStreet = function(callback){
+	if(!this.index.loaded) return this;
+
+	str = S('#place-street')[0].value.toUpperCase();
+	console.log(str);
+	if(this.files.length == 0){
+		this.message('The search appears to be broken',{'id':'search'});
+	}else{
+		this.message('',{'id':'search'});
+		var found = -1;
+		var str_lo = str;
+		var str_hi = str;
+		
+		if(str.length > 3){
+			str_lo = str.substr(0,3);
+			str_hi = str.substr(0,3);
+		}
+		while(str_lo.length < 3) str_lo += 'A';
+		while(str_hi.length < 3) str_hi += 'Z';
+
+		for(var i = 0 ; i < this.files.length; i++){
+			if(str_lo >= this.files[i].from && str_hi <= this.files[i].to){
+				found = i;
+				i = this.files.length;
+			}
+		}
+		if(str.length > 0){
+			if(found >= 0){
+				this.filefound = found;
+				// Check if the data has already been loaded
+				if(!this.files[found].loading && !this.files[found].loaded){
+					this.files[found].loading = true;
+					S().ajax(this.files[found].file,{
+						'dataType':'text',
+						'this': this,
+						'i': found,
+						'str': str,
+						'success': function(d,attr){
+							delete this.files[found].loading;
+							this.files[found].loaded = true;
+							this.files[attr.i].loaded = true;
+							this.files[attr.i].data = d.split(/[\n\r]/);
+							var cols,i,n,data;
+							for(i = 0; i < this.files[attr.i].data.length; i++){
+								cols = this.files[attr.i].data[i].split(/\t/);
+								if(cols.length == 6){
+									data = {'street':cols[0],'locality':cols[1],'postcode':cols[2],'lat':parseFloat(cols[3]),'lon':parseFloat(cols[4]),'numbers':cols[5].split(/;/)};
+									for(n = 0 ; n < data.numbers.length; n++){
+										cols = data.numbers[n].split(/:/);
+										data.numbers[n] = {'n':cols[0],'id':parseInt(cols[1], 36)};
+									}
+									this.premises.push(data);
+								}
+							}
+							this.postProcessStreet(attr.str,callback);
+						},
+						'error': function(e,attr){
+							this.message('Unable to load streets');
+						}
+					});
+				}else{
+					this.postProcessStreet(str,callback);
+				}
+			}
+		}else{
+			this.clearResults();
+		}
+	}
+	if(!str) this.clearResults();
+	return this;
+}
+Bins.prototype.postProcessStreet = function(name,callback){
 	var html = "";
 	var tmp = [];
 	var str,tmp,i;
-
-	if(typeof this.street==="number"){
-		for(i = 0; i < this.premises[this.street].numbers.length; i++){
-			str = this.premises[this.street].numbers[i].n.toLowerCase();
-			if(str.indexOf(name) >= 0) tmp.push(i);
+console.log('postProcessStreet',name);
+	if(typeof name==="string" && name.length > 0){
+		name = name.toLowerCase().replace(/[\s\-\,]/g,"");
+		for(i = 0; i < this.premises.length; i++){
+			str = this.premises[i].street.toLowerCase()+', '+this.premises[i].locality.toLowerCase();
+			str = str.replace(/[\s\-\,]/g,"");
+			if(str.indexOf(name) == 0) tmp.push(i);
 		}
+
 		this.el.input.find('.searchresults li').off('click');
 		html = "<ol>";
 		for(i = 0; i < tmp.length; i++){
-			str = this.premises[this.street].numbers[tmp[i]].n+' '+this.premises[this.street].street+', '+this.premises[this.street].locality;
-			html += '<li data-n="'+tmp[i]+'" '+(i==0 ? ' class="selected"':'')+'><a href="#" class="padding-small name">'+str+'</a></li>';
+			str = this.premises[tmp[i]].street+', '+this.premises[tmp[i]].locality;//+(tmp[i].name == tmp[i].region ? '' : ', '+tmp[i].region)+(tmp[i].type != "r" && tmp[i].type != "a" && tmp[i].type != "p" ? ' ('+t+')' : '');
+			//if(typeof attr.formatResult==="function") str = attr.formatResult.call((attr.this || _obj),tmp[i]);
+			html += '<li data-id="'+tmp[i]+'" '+(i==0 ? ' class="selected"':'')+'><a href="#" class="padding-small name">'+str+'</a></li>';
 		}
 		html += "</ol>";
 		this.el.input.find('.searchresults').html(html);
@@ -377,43 +432,69 @@ Bins.prototype.processResult = function(name){
 		for(i = 0 ; i < li.length ; i++){
 			S(li[i]).on('click',{me:this},function(e){
 				e.preventDefault();
-				n = parseInt(S(this).parent().attr('data-n'));
-				e.data.me.selectStreetNumber(n);
+				i = parseInt(S(this).parent().attr('data-id'));
+				e.data.me.selectStreet(i);
 			});
 		}
-	}else{
-		if(typeof name==="string" && name.length > 0){
-			name = name.toLowerCase().replace(/[\s\-\,]/g,"");
-			for(i = 0; i < this.premises.length; i++){
-				str = this.premises[i].street.toLowerCase()+', '+this.premises[i].locality.toLowerCase();
-				str = str.replace(/[\s\-\,]/g,"");
-				if(str.indexOf(name) == 0) tmp.push(i);
-			}
-
-			this.el.input.find('.searchresults li').off('click');
-			html = "<ol>";
-			for(i = 0; i < tmp.length; i++){
-				str = this.premises[tmp[i]].street+', '+this.premises[tmp[i]].locality;//+(tmp[i].name == tmp[i].region ? '' : ', '+tmp[i].region)+(tmp[i].type != "r" && tmp[i].type != "a" && tmp[i].type != "p" ? ' ('+t+')' : '');
-				//if(typeof attr.formatResult==="function") str = attr.formatResult.call((attr.this || _obj),tmp[i]);
-				html += '<li data-id="'+tmp[i]+'" '+(i==0 ? ' class="selected"':'')+'><a href="#" class="padding-small name">'+str+'</a></li>';
-			}
-			html += "</ol>";
-			this.el.input.find('.searchresults').html(html);
-			var li = this.el.input.find('.searchresults li a');
-			for(i = 0 ; i < li.length ; i++){
-				S(li[i]).on('click',{me:this},function(e){
-					e.preventDefault();
-					i = parseInt(S(this).parent().attr('data-id'));
-					e.data.me.selectStreet(i);
-				});
-			}
-		}
 	}
+	if(typeof callback==="function") callback.call(this);
+
+	return this;
+}
+
+Bins.prototype.processNumber = function(callback){
+	var name = S('#place-number')[0].value;
+	var html = "";
+	var tmp = [];
+	var str,tmp,i;
+console.log('processNumber',name,callback);
+	for(i = 0; i < this.premises[this.address.street].numbers.length; i++){
+		str = this.premises[this.address.street].numbers[i].n.toLowerCase();
+		if(str.indexOf(name) >= 0) tmp.push(i);
+	}
+	this.el.input.find('.searchresults li').off('click');
+	html = "<ol>";
+	for(i = 0; i < tmp.length; i++){
+		str = this.premises[this.address.street].numbers[tmp[i]].n+' '+this.premises[this.address.street].street+', '+this.premises[this.address.street].locality;
+		html += '<li data-n="'+tmp[i]+'" '+(i==0 ? ' class="selected"':'')+'><a href="#" class="padding-small name">'+str+'</a></li>';
+	}
+	html += "</ol>";
+	this.el.input.find('.searchresults').html(html);
+	var li = this.el.input.find('.searchresults li a');
+	for(i = 0 ; i < li.length ; i++){
+		S(li[i]).on('click',{me:this},function(e){
+			e.preventDefault();
+			n = parseInt(S(this).parent().attr('data-n'));
+			e.data.me.selectStreetNumber(n);
+		});
+	}
+
+	if(typeof callback==="function") callback.call(this);
 
 	return this;
 }
 
 Bins.prototype.getCollections = function(id){
+
+	this.address.string = this.premises[this.address.street].numbers[this.address.n].n+' '+this.premises[this.address.street].street+', '+this.premises[this.address.street].locality;
+	this.address.id = id;
+	this.address.number = this.premises[this.address.street].numbers[this.address.n].n;
+	this.address.streetname = this.premises[this.address.street].street;
+	this.address.locality = this.premises[this.address.street].locality;
+	
+	S('#locate').css({'display':'none'});
+	S('#results').css({'display':'block'}).html('<h3>'+this.address.string+this.svg.edit+'</h3><div class="spinner"><div class="rect1 c14-bg"></div><div class="rect2 c14-bg"></div><div class="rect3 c14-bg"></div><div class="rect4 c14-bg"></div><div class="rect5 c14-bg"></div></div>');
+	S('#results h3').on('click',{me:this},function(e){
+		
+		e.data.me.clearResults();
+		S('#results').html('').css({'display':'none'});
+		S('#locate').css({'display':''});
+		S('#place-number').css({'display':'none'});
+		S('#place-street').css({'display':''});
+		S('#place-street')[0].focus();
+		e.data.me.processStreet();
+		
+	});
 
 	n = 1000;
 	r = Math.floor(id/n)*1000;
@@ -439,19 +520,20 @@ Bins.prototype.getCollections = function(id){
 				d = new Date(d);
 				if(d >= now){
 					html += '<li><a href="'+this.bins[t].url+'" class="'+this.bins[t].cls+'"><img src="'+this.bins[t].svg+'" class="bin" alt="'+this.bins[t].text+' bin" /><h2>'+this.bins[t].text+'</h2><time datetime="'+d.toISOString()+'">'+formatDate(d)+'</time></a></li>';
-					this.events.push({'date':d,'url':this.bins[t].url,'bin':this.bins[t].text,'nicedate':formatDate(d),'icon':this.bins[t].svg});
+					this.events.push({'date':d.toISOString(),'url':this.bins[t].url,'bin':this.bins[t].text,'nicedate':formatDate(d),'icon':this.bins[t].svg});
 				}
 			}
 			html += '</ul>';
-			if("Notification" in window && location.href.indexOf('debug=true')>=0) html += '<button id="make-notifications" class="c14-bg">Notify me</button>';
+			html += '<button id="make-notifications" class="c14-bg">Notify me</button>';
 
 			this.el.output.append(html);
 			this.el.output.find('.spinner').remove();
 
 			if("Notification" in window){
+				var _obj = this;
 				S('#make-notifications').on('click',{me:this},function(e){
 					console.log('notify');
-					e.data.me.notify();
+					e.data.me.notify({ 'command': 'reminders', 'events': _obj.events});
 				});
 			}
 
@@ -463,16 +545,17 @@ Bins.prototype.getCollections = function(id){
 	return this;
 }
 
-Bins.prototype.notify = function(){
-	console.log(Notification.permission)
+Bins.prototype.notify = function(attr){
+	console.log('Notification permission ',Notification.permission)
+	this.message('Adding delayed notification '+Notification.permission);
 	if(Notification.permission === "granted"){
 		// If it's okay let's create a notification
 		var _obj = this;
-		// Wait 10 seconds
-		setTimeout(function(){
-			var notification = new Notification("Put your "+_obj.events[0].bin.toLowerCase()+' bin out',{'body':'There will be a '+_obj.events[0].bin+' collection on '+_obj.events[0].nicedate, 'timestamp': _obj.events[0].date.getTime(), 'icon':_obj.events[0].icon,'badge':'https://odileeds.org/favicon.ico'});
-			console.log(_obj.events)
-		},10000);
+		console.log('posting messages');
+		if(this.worker){
+			console.log('postMessage',JSON.stringify(attr));
+			this.worker.postMessage(JSON.stringify(attr));
+		}
 	}else if(Notification.permission === "default") {
 		var _obj = this;
 		// Otherwise, we need to ask the user for permission
@@ -482,6 +565,18 @@ Bins.prototype.notify = function(){
 		});
 	}
 	return this;
+}
+
+Bins.prototype.getAddress = function(){
+	var channel = new MessageChannel();
+	// Send the message to the Worker
+	if(this.worker) this.worker.postMessage({'command':'getAddress'}, [channel.port2]);
+}
+
+Bins.prototype.setAddress = function(){
+	var channel = new MessageChannel();
+	// Send the message to the Worker
+	if(this.worker) this.worker.postMessage({'command':'setAddress','address':this.address}, [channel.port2]);
 }
 
 function formatDate(date) {
