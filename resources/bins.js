@@ -488,7 +488,7 @@ Bins.prototype.getCollections = function(id){
 			this.el.output.find('.spinner').remove();
 
 			if("Notification" in window){
-				this.message('<button id="notifications" class="c14-bg">Notify me'+(Notification.permission === "default" ? ' (you will be asked to allow notifications first)':'')+'</button>',{'id':'notify'});
+				this.message('<button id="notifications" class="c14-bg">Add reminders'+(Notification.permission === "default" ? ' (you will be asked to allow notifications first)':'')+'</button>',{'id':'notify'});
 				var _obj = this;
 				S('#notifications').on('click',{me:this},function(e){
 					console.log('notify');
