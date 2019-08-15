@@ -443,8 +443,7 @@ Bins.prototype.getCollections = function(id){
 		
 		e.data.me.clearResults();
 		// Clear messages
-		e.data.me.message('',{'id':'default'});
-		e.data.me.message('',{'id':'notify'});
+		S('.message > div').remove();
 
 		S('#results').html('').css({'display':'none'});
 		S('#locate').css({'display':''});
