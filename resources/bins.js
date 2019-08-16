@@ -532,8 +532,9 @@ Bins.prototype.notify = function(attr){
 Bins.prototype.getAddress = function(){
 	var channel = new MessageChannel();
 	// Load any existing address defined in a cookie
-	this.address = getCookie('address');
-	if(this.address){
+	var address = getCookie('address');
+	if(address){
+		this.address = address;
 		this.el.input.find('#place-street')[0].value = this.address.streetname+', '+this.address.locality;
 		console.log('processStreet')
 		this.processStreet(function(){
