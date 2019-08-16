@@ -237,7 +237,7 @@ Bins.prototype.init = function(){
 			S('.screen').css({'display':'none'});
 			S(href).css({'display':'block'});
 		}
-		if(href == "#locate") e.data.me.clearResults();
+		if(href == "#locate") e.data.me.start();
 
 		// Set the location
 		location.href = "#";
@@ -431,6 +431,20 @@ Bins.prototype.processNumber = function(callback){
 	return this;
 }
 
+Bins.prototype.start = function(){
+	this.clearResults();
+	// Clear messages
+	S('.message > div').remove();
+
+	S('#results').html('').css({'display':'none'});
+	S('#locate').css({'display':''});
+	S('.place-number').css({'display':'none'});
+	S('.place-street').css({'display':''});
+	S('#place-street')[0].focus();
+	this.processStreet();
+	return this;
+}
+
 Bins.prototype.getCollections = function(id){
 
 	this.address.string = this.premises[this.address.street].numbers[this.address.n].n+' '+this.premises[this.address.street].street+', '+this.premises[this.address.street].locality;
@@ -441,20 +455,7 @@ Bins.prototype.getCollections = function(id){
 	
 	S('#locate').css({'display':'none'});
 	S('#results').css({'display':'block'}).html('<h3>'+this.address.string+this.svg.edit+'</h3><div class="spinner"><div class="rect1 c14-bg"></div><div class="rect2 c14-bg"></div><div class="rect3 c14-bg"></div><div class="rect4 c14-bg"></div><div class="rect5 c14-bg"></div></div>');
-	S('#results h3').on('click',{me:this},function(e){
-		
-		e.data.me.clearResults();
-		// Clear messages
-		S('.message > div').remove();
-
-		S('#results').html('').css({'display':'none'});
-		S('#locate').css({'display':''});
-		S('.place-number').css({'display':'none'});
-		S('.place-street').css({'display':''});
-		S('#place-street')[0].focus();
-		e.data.me.processStreet();
-		
-	});
+	S('#results h3').on('click',{me:this},function(e){ e.data.me.start(); });
 
 	n = 1000;
 	r = Math.floor(id/n)*1000;
@@ -536,7 +537,6 @@ Bins.prototype.getAddress = function(){
 	if(address){
 		this.address = address;
 		this.el.input.find('#place-street')[0].value = this.address.streetname+', '+this.address.locality;
-		console.log('processStreet')
 		this.processStreet(function(){
 			if(this.el.input.find('.searchresults li').length==1){
 				i = parseInt(this.el.input.find('.searchresults li').attr('data-id'));
