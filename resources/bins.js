@@ -41,6 +41,7 @@ function Bins(inp){
 		navigator.serviceWorker.addEventListener('message', function handler(e){
 			if(e.source !== _obj.worker) return;
 			console.log('heard',e.data);
+			/*
 			if(e.data.command == "getAddress" && e.data.address){
 				_obj.address = e.data.address;
 				_obj.el.input.find('#place-street')[0].value = _obj.address.streetname+', '+_obj.address.locality;
@@ -60,7 +61,7 @@ function Bins(inp){
 						}
 					}
 				});
-			}
+			}*/
 		});
 	}
 	
@@ -245,6 +246,7 @@ Bins.prototype.init = function(){
 		S('#hamburger')[0].checked = false;
 	});
 	
+
 	return this;
 }
 
@@ -529,14 +531,37 @@ Bins.prototype.notify = function(attr){
 
 Bins.prototype.getAddress = function(){
 	var channel = new MessageChannel();
+	// Load any existing address defined in a cookie
+	this.address = getCookie('address');
+	if(this.address){
+		this.el.input.find('#place-street')[0].value = this.address.streetname+', '+this.address.locality;
+		console.log('processStreet')
+		this.processStreet(function(){
+			if(this.el.input.find('.searchresults li').length==1){
+				i = parseInt(this.el.input.find('.searchresults li').attr('data-id'));
+				if(this.premises[i].street == this.address.streetname && this.premises[i].locality == this.address.locality){
+					this.selectStreet(i);
+					this.el.input.find('#place-number')[0].value = this.address.number;
+					this.processNumber(function(){
+						if(this.el.input.find('.searchresults li').length==1){
+							i = this.address.street;
+							n = parseInt(this.el.input.find('.searchresults li').attr('data-n'));
+							if(this.address.street==i && this.address.n==n) this.selectStreetNumber(n);
+						}
+					});
+				}
+			}
+		});
+	}
 	// Send the message to the Worker
-	if(this.worker) this.worker.postMessage({'command':'getAddress'}, [channel.port2]);
+	// if(this.worker) this.worker.postMessage({'command':'getAddress'}, [channel.port2]);
 }
 
 Bins.prototype.setAddress = function(){
 	var channel = new MessageChannel();
 	// Send the message to the Worker
-	if(this.worker) this.worker.postMessage({'command':'setAddress','address':this.address}, [channel.port2]);
+	setCookie('address',this.address);
+//	if(this.worker) this.worker.postMessage({'command':'setAddress','address':this.address}, [channel.port2]);
 }
 
 function formatDate(date) {
@@ -597,6 +622,35 @@ function CSVToArray (CSV_string, delimiter) {
 		rows[rows.length - 1].push(matched_value);
 	}
 	return rows; // Return the parsed data Array
+}
+
+function getCookie(cname) {
+	var name,ca,i,j,c,str,obj;
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(i = 0; i < ca.length; i++){
+		c = ca[i];
+		while(c.charAt(0) == ' ') c = c.substring(1);
+		if(c.indexOf(name) == 0) {
+			str = c.substring(name.length, c.length);
+			bits = str.split(/\|/);
+			obj = {};
+			for(j = 0; j < bits.length; j+=2) obj[bits[j]] = bits[j+1];
+			return obj;
+		}
+	}
+	return "";
+}
+
+function setCookie(cname,obj){
+	var str,key;
+	str = "";
+	for(key in obj){
+		if(str) str += '|';
+		str += key+'|'+obj[key];
+	}
+	document.cookie = cname+'='+str;
+	return str;
 }
 
 var app;

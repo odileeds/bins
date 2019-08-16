@@ -1,4 +1,4 @@
-const cacheName = "v6";
+const cacheName = "v7";
 let reminders;
 let checker;
 const interval = 10000;
@@ -14,18 +14,14 @@ function checkReminders(){
 			// If message is within the current day
 			if(typeof inadvance!=="number") advance = 0;
 			if(wait < inadvance){
-				console.log('setTimeout ',key,wait);
-				//setTimeout(function(){
-					console.log('done ',key);
-					let title = "Put your "+reminders[key].data.bin.toLowerCase()+' bin out';
-					let options = {}
-					if(reminders[key].data.nicedate) options.body = reminders[key].data.nicedate;
-					if(reminders[key].data.date) options.timestamp = reminders[key].data.date.getTime();
-					if(reminders[key].data.icon) options.icon = reminders[key].data.icon;
-					if(reminders[key].data.badge) options.badge = reminders[key].data.badge;
-					self.registration.showNotification(title, options);
-					delete reminders[key];
-				//},wait);
+				let title = "Put your "+reminders[key].data.bin.toLowerCase()+' bin out';
+				let options = {}
+				if(reminders[key].data.nicedate) options.body = reminders[key].data.nicedate;
+				if(reminders[key].data.date) options.timestamp = reminders[key].data.date.getTime();
+				if(reminders[key].data.icon) options.icon = reminders[key].data.icon;
+				if(reminders[key].data.badge) options.badge = reminders[key].data.badge;
+				self.registration.showNotification(title, options);
+				delete reminders[key];
 			}else{
 				console.log('waiting '+((wait)/86400000).toFixed(2)+' days to post '+key);
 			}
@@ -73,9 +69,7 @@ self.addEventListener('activate', function(e){
 			)
 		})
 	);
-	//checkReminders();
 	checker = setInterval(checkReminders,interval);
-
 });
 
 
@@ -113,13 +107,13 @@ self.addEventListener('message', function(e){
 		checkReminders();
 		checker = setInterval(checkReminders,interval);
 		console.log('reminders',reminders);
-	}else if(data.command === 'setAddress'){
+	}/*else if(data.command === 'setAddress'){
 		console.log('setAddress received by Worker',data,e.source);
 		address = data.address;
 		e.source.postMessage({'command':data.command,'address':address});
 	}else if(data.command === 'getAddress'){
 		console.log('getAddress received by Worker',address);
 		e.source.postMessage({'command':data.command,'address':address});
-	}
+	}*/
 });
 
