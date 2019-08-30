@@ -492,16 +492,16 @@ Bins.prototype.getCollections = function(id){
 			this.el.output.append(html);
 			this.el.output.find('.spinner').remove();
 
-			if("Notification" in window){
-				this.message('<button id="notifications" class="c14-bg">Add reminders'+(Notification.permission === "default" ? ' (you will be asked to allow notifications first)':'')+'</button>',{'id':'notify'});
+			//if("Notification" in window){
+				//this.message('<button id="notifications" class="c14-bg">Add reminders'+(Notification.permission === "default" ? ' (you will be asked to allow notifications first)':'')+'</button>',{'id':'notify'});
+				this.message('<button id="notifications" class="c14-bg">Add reminders</button>',{'id':'notify'});
 				var _obj = this;
 				S('#notifications').on('click',{me:this},function(e){
 					console.log('notify');
 					e.data.me.notify({ 'command': 'reminders', 'events': _obj.events});
 					e.data.me.message('',{'id':'notify'});
 				});
-			}
-
+			//}
 		},
 		'error': function(e,attr){
 			this.message('Unable to load collection times',{'id':'collections'});
