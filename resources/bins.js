@@ -517,10 +517,20 @@ Bins.prototype.notify = function(attr){
 	if(typeof Blob!=="function") return this;
 
 
+	var file = {'ext':'ics','mime':'text/v-calendar','v':'2.0'};
+	var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+	// Windows Phone must come first because its UA also contains "Android"
+	if(/windows phone/i.test(userAgent)) file = {'ext':'ics','mime':'text/calendar','v':'2.0'}
+	// Android
+	if(/android/i.test(userAgent)) file = {'ext':'vcs','mime':'text/v-calendar','v':'1.0'}
+	// iOS detection from: http://stackoverflow.com/a/9039885/177710
+	if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) file = {'ext':'ical','mime':'text/calendar','v':'2.0'}
+
+
 	// Build a vCalendar file here
 	// We want to also remove any existing alerts (that haven't yet happened) if they no longer will
 	var cal = 'BEGIN:VCALENDAR\r\n';
-	cal += 'VERSION:2.0\r\n';
+	cal += 'VERSION:'+file.v+'\r\n';
 	cal += 'PRODID:-//ODI Leeds/'+this.name+'//EN\r\n';
 	for(var i = 0; i < attr.events.length; i++){
 		uid = 'bins-'+attr.events[i].date.substr(0,10);
@@ -540,18 +550,6 @@ Bins.prototype.notify = function(attr){
 		cal += 'END:VEVENT\r\n';
 	}
 	cal += 'END:VCALENDAR\r\n';
-	console.log(cal,attr);
-	
-
-	var file = {'ext':'ics','mime':'text/v-calendar'};
-	var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-	// Windows Phone must come first because its UA also contains "Android"
-	if(/windows phone/i.test(userAgent)) file = {'ext':'ics','mime':'text/calendar'}
-	// Android
-	if(/android/i.test(userAgent)) file = {'ext':'vcs','mime':'text/v-calendar'}
-	// iOS detection from: http://stackoverflow.com/a/9039885/177710
-	if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) file = {'ext':'ical','mime':'text/calendar'}
-
 
 	var textFileAsBlob = new Blob([cal], {type:file.mime});
 	
