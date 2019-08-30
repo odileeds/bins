@@ -545,12 +545,12 @@ Bins.prototype.notify = function(attr){
 
 	var textFileAsBlob = new Blob([cal], {type:'text/calendar'});
 	
-	var filetype = "ical";
+	var filetype = "ics";
 	
 	var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
 	// Windows Phone must come first because its UA also contains "Android"
-	if(/windows phone/i.test(userAgent)) filetype = "ical";
+	if(/windows phone/i.test(userAgent)) filetype = "ics";
 	// Android
 	if(/android/i.test(userAgent)) filetype = "vcs";
 	// iOS detection from: http://stackoverflow.com/a/9039885/177710
