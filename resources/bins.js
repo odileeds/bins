@@ -544,11 +544,22 @@ Bins.prototype.notify = function(attr){
 	
 
 	var textFileAsBlob = new Blob([cal], {type:'text/plain'});
+	
+	var filetype = "ical";
+	
+	var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+	// Windows Phone must come first because its UA also contains "Android"
+	if(/windows phone/i.test(userAgent)) filetype = "ical";
+	// Android
+	if(/android/i.test(userAgent)) filetype = "vcs";
+	// iOS detection from: http://stackoverflow.com/a/9039885/177710
+	if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) filetype = "ical";
 
 	function destroyClickedElement(event){ document.body.removeChild(event.target); }
 
 	var dl = document.createElement("a");
-	dl.download = "bins.vcs";
+	dl.download = "bins."+filetype;
 	dl.innerHTML = "Download File";
 	if(window.webkitURL != null){
 		// Chrome allows the link to be clicked
