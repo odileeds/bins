@@ -219,7 +219,7 @@ footer { display: none; }
 .questions > li { margin-bottom: 1em; }
 .questions > li:last-child { margin-bottom: 0em; }
 
-#notifications { width: 100%; line-height: 2em; }
+#notifications { width: 100%; line-height: 3em; }
 #notifications:hover, #notifications:focus { background-color: black; color: white; }
 
 .message {
