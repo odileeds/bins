@@ -6,6 +6,7 @@ function Bins(inp){
 	if(!this.inp.input) this.inp.input = 'locate';
 	if(!this.inp.output) this.inp.output = 'results';
 	this.el = { 'input': S('#'+this.inp.input), 'output': S('#'+this.inp.output) };
+	this.name = "Leeds bin dates";
 	this.version = "0.1";
 	this.premises = [];
 	this.files = [];
@@ -510,6 +511,59 @@ Bins.prototype.getCollections = function(id){
 }
 
 Bins.prototype.notify = function(attr){
+	
+	
+	// Bail out if there is no Blob function
+	if(typeof Blob!=="function") return this;
+
+
+	// Build a vCalendar file here
+	// We want to also remove any existing alerts (that haven't yet happened) if they no longer will
+	var cal = 'BEGIN:VCALENDAR\r\n';
+	cal += 'VERSION:2.0\r\n';
+	cal += 'PRODID:-//ODI Leeds/'+this.name+'//EN\r\n';
+	for(var i = 0; i < attr.events.length; i++){
+		uid = 'bins-'+attr.events[i].date.substr(0,10);
+		ndate = (new Date()).toISOString().replace(/[^0-9TZ]/g,"");
+		edate = attr.events[i].date.replace(/[^0-9TZ]/g,"");
+		cal += 'BEGIN:VEVENT\r\n';
+		cal += 'UID:'+uid+'@odileeds.github.io\r\n';
+		cal += 'DTSTAMP:'+ndate+'\r\n';
+		cal += 'DTSTART:'+edate+'\r\n';
+		cal += 'DTEND:'+edate+'\r\n';
+		cal += 'SUMMARY:'+attr.events[i].bin+' collection\r\n';
+		cal += 'BEGIN:VALARM\r\n';
+		cal += 'TRIGGER:-PT12H\r\n';
+		cal += 'ACTION:DISPLAY\r\n';
+		cal += 'DESCRIPTION:Reminder\r\n';
+		cal += 'END:VALARM\r\n';
+		cal += 'END:VEVENT\r\n';
+	}
+	cal += 'END:VCALENDAR\r\n';
+	console.log(cal,attr);
+	
+
+	var textFileAsBlob = new Blob([cal], {type:'text/plain'});
+
+	function destroyClickedElement(event){ document.body.removeChild(event.target); }
+
+	var dl = document.createElement("a");
+	dl.download = "bins.vcs";
+	dl.innerHTML = "Download File";
+	if(window.webkitURL != null){
+		// Chrome allows the link to be clicked
+		// without actually adding it to the DOM.
+		dl.href = window.webkitURL.createObjectURL(textFileAsBlob);
+	}else{
+		// Firefox requires the link to be added to the DOM
+		// before it can be clicked.
+		dl.href = window.URL.createObjectURL(textFileAsBlob);
+		dl.onclick = destroyClickedElement;
+		dl.style.display = "none";
+		document.body.appendChild(dl);
+	}
+	dl.click();
+	/*
 	console.log('Notification permission ',Notification.permission)
 	if(Notification.permission === "granted"){
 		// If it's okay let's create a notification
@@ -519,6 +573,8 @@ Bins.prototype.notify = function(attr){
 			console.log('postMessage',JSON.stringify(attr));
 			this.worker.postMessage(JSON.stringify(attr));
 		}
+	
+		
 	}else if(Notification.permission === "default") {
 		var _obj = this;
 		// Otherwise, we need to ask the user for permission
@@ -526,7 +582,7 @@ Bins.prototype.notify = function(attr){
 			// If the user accepts, let's create a notification
 			if(permission === "granted") _obj.notify();
 		});
-	}
+	}*/
 	return this;
 }
 
