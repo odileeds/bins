@@ -543,23 +543,23 @@ Bins.prototype.notify = function(attr){
 	console.log(cal,attr);
 	
 
-	var textFileAsBlob = new Blob([cal], {type:'text/calendar'});
-	
-	var filetype = "ics";
-	
+	var file = {'ext':'ics','mime':'text/v-calendar'};
 	var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
 	// Windows Phone must come first because its UA also contains "Android"
-	if(/windows phone/i.test(userAgent)) filetype = "ics";
+	if(/windows phone/i.test(userAgent)) file = {'ext':'ics','mime':'text/calendar'}
 	// Android
-	if(/android/i.test(userAgent)) filetype = "vcs";
+	if(/android/i.test(userAgent)) file = {'ext':'vcs','mime':'text/v-calendar'}
 	// iOS detection from: http://stackoverflow.com/a/9039885/177710
-	if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) filetype = "ical";
+	if(/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) file = {'ext':'ical','mime':'text/calendar'}
+
+
+	var textFileAsBlob = new Blob([cal], {type:file.mime});
+	
 
 	function destroyClickedElement(event){ document.body.removeChild(event.target); }
 
 	var dl = document.createElement("a");
-	dl.download = "bins."+filetype;
+	dl.download = "bins."+file.ext;
 	dl.innerHTML = "Download File";
 	if(window.webkitURL != null){
 		// Chrome allows the link to be clicked
