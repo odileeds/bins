@@ -543,7 +543,7 @@ Bins.prototype.notify = function(attr){
 	console.log(cal,attr);
 	
 
-	var textFileAsBlob = new Blob([cal], {type:'text/plain'});
+	var textFileAsBlob = new Blob([cal], {type:'text/calendar'});
 	
 	var filetype = "ical";
 	
