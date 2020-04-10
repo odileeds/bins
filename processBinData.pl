@@ -7,7 +7,7 @@ use utf8;
 #http://opendata.leeds.gov.uk/downloads/bins/dm_premises.csv
 #http://opendata.leeds.gov.uk/downloads/bins/dm_jobs.csv
 
-$dir = "data/leeds/";
+$dir = "data/leeds";
 if($ARGV[0] && -d $ARGV[0]){ $dir = $ARGV[0]; }
 
 %conv = ('GREEN'=>'G','BLACK'=>'B','BROWN'=>'R','FOOD'=>'F');
@@ -16,8 +16,8 @@ if($ARGV[0] && -d $ARGV[0]){ $dir = $ARGV[0]; }
 
 $urljobs = "http://opendata.leeds.gov.uk/downloads/bins/dm_jobs.csv";
 $urlpremises = "http://opendata.leeds.gov.uk/downloads/bins/dm_premises.csv";
-$filejobs = $dir."dm_jobs.csv";
-$filepremises = $dir."dm_premises.csv";
+$filejobs = $dir."/dm_jobs.csv";
+$filepremises = $dir."/dm_premises.csv";
 
 
 # Update data as necessary
@@ -82,7 +82,7 @@ for($i = 0; $i < @premises ; $i++){
 
 # Read in the OS streets data
 print "Read OS streets data...\n";
-open(FILE,$dir."names.csv");
+open(FILE,$dir."/names.csv");
 @lines = <FILE>;
 close(FILE);
 %roads;
@@ -98,7 +98,7 @@ for($i = 0; $i < $n; $i++){
 
 # Read in the OS places data
 print "Read OS places data...\n";
-open(FILE,$dir."places.csv");
+open(FILE,$dir."/places.csv");
 @lines = <FILE>;
 close(FILE);
 %places;
@@ -113,7 +113,7 @@ for($i = 0; $i < $n; $i++){
 
 
 # Now process bin premises data
-open(FILE,$dir."dm_premises.csv");
+open(FILE,$dir."/dm_premises.csv");
 @lines = <FILE>;
 close(FILE);
 
@@ -269,11 +269,11 @@ foreach $s (sort(keys(%streets))){
 				$temp = $start;
 			}
 			
-			$index{"$temp-$last"} = $dir."premises-$temp-$last.csv";
+			$index{"$temp-$last"} = $dir."/premises-$temp-$last.csv";
 			open(FILE,">",$index{"$temp-$last"});
 			print FILE @lines;
 			close(FILE);
-			open(FILE,">",$dir."jobs-$temp-$last.csv");
+			open(FILE,">",$dir."/jobs-$temp-$last.csv");
 			print FILE @jlines;
 			close(FILE);
 			@lines = ();
@@ -321,12 +321,12 @@ if($f > 0){
 }
 $last = "ZZZ";
 
-$index{"$temp-$last"} = $dir."premises-$temp-$last.csv";
+$index{"$temp-$last"} = $dir."/premises-$temp-$last.csv";
 open(FILE,">",$index{"$temp-$last"});
 print FILE @lines;
 close(FILE);
 
-open(FILE,">",$dir."index.csv");
+open(FILE,">",$dir."/index.csv");
 foreach $key (sort(keys(%index))){
 	print FILE "$key,$index{$key}\n";
 }
