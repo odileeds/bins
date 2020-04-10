@@ -33,8 +33,6 @@ if(!-e $filejobs || -s $filejobs == 0){
 	`wget -q --no-check-certificate -O $filejobs "$urljobs"`;
 	`rm $dir/jobs-*`;
 }
-	`rm $dir/premises-*`;
-	`rm $dir/jobs-*`;
 
 
 
