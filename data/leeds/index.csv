@@ -13,9 +13,9 @@ BAS-BEC,data/leeds/premises-BAS-BEC.csv
 BED-BEE,data/leeds/premises-BED-BEE.csv
 BEF-BEN,data/leeds/premises-BEF-BEN.csv
 BEO-BIR,data/leeds/premises-BEO-BIR.csv
-BIS-BLE,data/leeds/premises-BIS-BLE.csv
-BLF-BOU,data/leeds/premises-BLF-BOU.csv
-BOV-BRA,data/leeds/premises-BOV-BRA.csv
+BIS-BLA,data/leeds/premises-BIS-BLA.csv
+BLB-BOG,data/leeds/premises-BLB-BOG.csv
+BOH-BRA,data/leeds/premises-BOH-BRA.csv
 BRB-BRI,data/leeds/premises-BRB-BRI.csv
 BRJ-BRO,data/leeds/premises-BRJ-BRO.csv
 BRP-BUL,data/leeds/premises-BRP-BUL.csv
@@ -34,10 +34,10 @@ COP-COT,data/leeds/premises-COP-COT.csv
 COU-CRA,data/leeds/premises-COU-CRA.csv
 CRB-CRO,data/leeds/premises-CRB-CRO.csv
 CRP-DAR,data/leeds/premises-CRP-DAR.csv
-DAS-DEL,data/leeds/premises-DAS-DEL.csv
-DEM-DOB,data/leeds/premises-DEM-DOB.csv
-DOC-DUN,data/leeds/premises-DOC-DUN.csv
-DUO-EAS,data/leeds/premises-DUO-EAS.csv
+DAS-DEI,data/leeds/premises-DAS-DEI.csv
+DEJ-DIG,data/leeds/premises-DEJ-DIG.csv
+DIH-DUD,data/leeds/premises-DIH-DUD.csv
+DUE-EAS,data/leeds/premises-DUE-EAS.csv
 EAT-EDI,data/leeds/premises-EAT-EDI.csv
 EDJ-ELM,data/leeds/premises-EDJ-ELM.csv
 ELN-FAI,data/leeds/premises-ELN-FAI.csv
@@ -146,7 +146,7 @@ WEM-WES,data/leeds/premises-WEM-WES.csv
 WET-WHE,data/leeds/premises-WET-WHE.csv
 WHF-WHI,data/leeds/premises-WHF-WHI.csv
 WHJ-WIL,data/leeds/premises-WHJ-WIL.csv
-WIM-WOL,data/leeds/premises-WIM-WOL.csv
-WOM-WOO,data/leeds/premises-WOM-WOO.csv
+WIM-WIT,data/leeds/premises-WIM-WIT.csv
+WIU-WOO,data/leeds/premises-WIU-WOO.csv
 WOP-WYT,data/leeds/premises-WOP-WYT.csv
 WYU-ZZZ,data/leeds/premises-WYU-ZZZ.csv

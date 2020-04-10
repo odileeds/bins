@@ -2,7 +2,7 @@
 
 use Encode qw/encode decode/;
 use Math::BigInt ();
-
+use utf8;
 
 #http://opendata.leeds.gov.uk/downloads/bins/dm_premises.csv
 #http://opendata.leeds.gov.uk/downloads/bins/dm_jobs.csv
@@ -12,12 +12,38 @@ if($ARGV[0] && -d $ARGV[0]){ $dir = $ARGV[0]; }
 
 %conv = ('GREEN'=>'G','BLACK'=>'B','BROWN'=>'R','FOOD'=>'F');
 
+
+
+$urljobs = "http://opendata.leeds.gov.uk/downloads/bins/dm_jobs.csv";
+$urlpremises = "http://opendata.leeds.gov.uk/downloads/bins/dm_premises.csv";
+$filejobs = $dir."dm_jobs.csv";
+$filepremises = $dir."dm_premises.csv";
+
+
+# Update data as necessary
+if(-e $filepremises && fileAgeDays($filepremises) < -1){ `rm $filepremises`; }
+if(!-e $filepremises || -s $filepremises == 0){
+	print "Downloading $filepremises\n";
+	`wget -q --no-check-certificate -O $filepremises "$urlpremises"`;
+	`rm $dir/premises-*`;
+}
+if(-e $filejobs && fileAgeDays($filejobs) < -1){ `rm $filejobs`; }
+if(!-e $filejobs || -s $filejobs == 0){
+	print "Downloading $filejobs\n";
+	`wget -q --no-check-certificate -O $filejobs "$urljobs"`;
+	`rm $dir/jobs-*`;
+}
+	`rm $dir/premises-*`;
+	`rm $dir/jobs-*`;
+
+
+
 #PremisesID,Type,CollectionDate
 #1050327,BROWN,31/08/19
 %jobs;
 %collections;
 print "Processing jobs...\n";
-open(FILE,$dir."dm_jobs.csv");
+open(FILE,$filejobs);
 $line = <FILE>;
 while($line = <FILE>){
 	$line = decode("UCS-2BE", $line);
@@ -377,4 +403,10 @@ sub encode_base36 {
 	}
 
 	return '0' x ( $padlength - length $result ) . reverse( $result );
+}
+
+sub fileAgeDays {
+	my $file = $_[0];
+	my $fclock = (stat $file)[9];
+	return ($fclock - time)/86400;
 }
