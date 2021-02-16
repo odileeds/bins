@@ -137,16 +137,19 @@ for($i = 0; $i < $n; $i++){
 
 	# The file is saved in UCS-2 LE BOM which seems to add 
 	# invisible characters so we want to tidy up the number
-	$cols[2] =~ s/[^0-9]//g;
+	$cols[2] =~ s/[^\s\w\d]//g;
+	$cols[2] =~ s/\://g;
 
-	if($cols[1]){
-		# Remove non-expected characters
-		$cols[1] =~ s/[^\s\w\d]//g;
-	}
+	# Remove non-expected characters
+	$cols[1] =~ s/[^\s\w\d]//g;
+	$cols[1] =~ s/\://g;
 
 	$p = encode_base36($cols[0]);
 	$premiseslookup{$p} = $cols[0];
-	$id = "$cols[1]".($cols[1] ? ($cols[2] ? ", ":""):"").sprintf("%05d",$cols[2]).":".$p;
+	$id = "$cols[1]".($cols[1] ? ($cols[2] ? ", ":""):"").($cols[2]).":".$p;
+if($lines[$i] =~ /Meanwood Road/i && $cols[2] =~ /173/){
+	print "$cols[0],$cols[1],$cols[2],$s = $id\n";
+}
 	if($cols[3]){
 		if(!$streets{$s}){
 			@{$streets{$s}} = ($id);
@@ -292,7 +295,7 @@ foreach $s (sort(keys(%streets))){
 			foreach $id (sort(@{$streets{$s}})){
 				$id =~ s/^0+//g;
 				$id =~ s/,\s+0*/, /g;
-				$id =~ s/0{5}(:|$)/\1/g;
+				$id =~ s/(:|$)/\1/g;
 				$line .= "$id;";
 			}
 			$line .= "\n";
