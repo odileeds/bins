@@ -44,7 +44,7 @@ print "Processing jobs...\n";
 open(FILE,$filejobs);
 $line = <FILE>;
 while($line = <FILE>){
-	$line = decode("UCS-2BE", $line);
+	#$line = decode("UCS-2BE", $line);
 	$line =~ s/[\n\r]//g;
 	($p,$t,$d) = split(/,/,$line);
 	if($p){
@@ -111,7 +111,7 @@ for($i = 0; $i < $n; $i++){
 
 
 # Now process bin premises data
-open(FILE,$dir."/dm_premises.csv");
+open(FILE,$filepremises);
 @lines = <FILE>;
 close(FILE);
 
@@ -120,13 +120,15 @@ $n = @lines;
 
 print "Processing premises file...\n";
 %premiseslookup;
-for($i = 1; $i < $n; $i++){
+for($i = 0; $i < $n; $i++){
 
 	# For some reason the premises file is encoded
 	# in an unusual format so we get it into UTF8
-	$lines[$i] = decode("UCS-2BE", $lines[$i]);
-	 
+	#$lines[$i] = decode("UCS-2BE", $lines[$i]);
+	$lines[$i] = decode("Windows-1252", $lines[$i]);
 	$lines[$i] =~ s/[\n\r]//g;
+	# PremisesID,Address1,Address2,Street,Locality,Town,
+	# e.g. 666057, ,1,ABBEY AVENUE,BRAMLEY,LEEDS,LS5 3DH
 	(@cols) = split(/,(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/,$lines[$i]);
 
 	$s = $cols[3]."\t".$cols[4]."\t".$cols[5];
@@ -136,6 +138,11 @@ for($i = 1; $i < $n; $i++){
 	# The file is saved in UCS-2 LE BOM which seems to add 
 	# invisible characters so we want to tidy up the number
 	$cols[2] =~ s/[^0-9]//g;
+
+	if($cols[1]){
+		# Remove non-expected characters
+		$cols[1] =~ s/[^\s\w\d]//g;
+	}
 
 	$p = encode_base36($cols[0]);
 	$premiseslookup{$p} = $cols[0];
