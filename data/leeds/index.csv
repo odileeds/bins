@@ -6,7 +6,8 @@ ALM-ANN,data/leeds/premises-ALM-ANN.csv
 ANO-ARM,data/leeds/premises-ANO-ARM.csv
 ARN-ASH,data/leeds/premises-ARN-ASH.csv
 ASI-AUD,data/leeds/premises-ASI-AUD.csv
-AUE-BAC,data/leeds/premises-AUE-BAC.csv
+AUE-AZA,data/leeds/premises-AUE-AZA.csv
+AZB-BAC,data/leeds/premises-AZB-BAC.csv
 BAD-BAN,data/leeds/premises-BAD-BAN.csv
 BAO-BAR,data/leeds/premises-BAO-BAR.csv
 BAS-BEC,data/leeds/premises-BAS-BEC.csv
@@ -146,7 +147,7 @@ WEM-WES,data/leeds/premises-WEM-WES.csv
 WET-WHE,data/leeds/premises-WET-WHE.csv
 WHF-WHI,data/leeds/premises-WHF-WHI.csv
 WHJ-WIL,data/leeds/premises-WHJ-WIL.csv
-WIM-WIT,data/leeds/premises-WIM-WIT.csv
-WIU-WOO,data/leeds/premises-WIU-WOO.csv
+WIM-WIS,data/leeds/premises-WIM-WIS.csv
+WIT-WOO,data/leeds/premises-WIT-WOO.csv
 WOP-WYT,data/leeds/premises-WOP-WYT.csv
 WYU-ZZZ,data/leeds/premises-WYU-ZZZ.csv
