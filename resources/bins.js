@@ -180,6 +180,7 @@
 		ODI.ajax(this.index.file,{
 			"dataType": "text",
 			"this": this,
+			"cache": false,
 			"success": function(d){
 				this.index.loaded = true;
 				delete this.index.loading;
