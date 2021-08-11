@@ -369,6 +369,7 @@
 							'this': this,
 							'i': found,
 							'str': str,
+							'cache':false,
 							'success': function(d,a){
 								attr = a.data;
 								delete this.files[found].loading;
