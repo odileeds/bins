@@ -543,13 +543,13 @@
 
 				//if("Notification" in window){
 					//this.message('<button id="notifications" class="c14-bg">Add reminders'+(Notification.permission === "default" ? ' (you will be asked to allow notifications first)':'')+'</button>',{'id':'notify'});
-					this.message('<button id="notifications" class="c14-bg">Add reminders</button>',{'id':'notify'});
+					/*this.message('<button id="notifications" class="c14-bg">Add reminders</button>',{'id':'notify'});
 					var _obj = this;
 					addEvent('click',document.getElementById('notifications'),{me:this},function(e){
 						e.data.me.log('notify');
 						e.data.me.notify({ 'command': 'reminders', 'events': _obj.events});
 						e.data.me.message('',{'id':'notify'});
-					});
+					});*/
 				//}
 			},
 			'error': function(e,attr){
