@@ -670,10 +670,12 @@
 						this.el.input.querySelector('#place-number').value = this.address.number;
 						this.processNumber(function(){
 							var lis = this.el.input.querySelectorAll('.searchresults li');
-							if(lis && lis.length==1){
-								i = this.address.street;
-								n = parseInt(lis[0].getAttribute('data-n'));
-								if(this.address.street==i && this.address.n==n) this.selectStreetNumber(n);
+							for(li = 0; li < lis.length; li++){
+								if(lis[li].getAttribute('data-n') == this.address.n){
+									i = this.address.street;
+									n = parseInt(this.address.n);
+									if(this.address.street==i && this.address.n==n) this.selectStreetNumber(n);
+								}
 							}
 						});
 					}
