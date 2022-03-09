@@ -408,7 +408,7 @@
 	Bins.prototype.postProcessStreet = function(name,callback){
 		var html = "";
 		var tmp = [];
-		var str,tmp,i,ol,li;
+		var str,i,ol,li;
 		if(typeof name==="string" && name.length > 0){
 			name = name.toLowerCase().replace(/[\s\-\,]/g,"");
 			for(i = 0; i < this.premises.length; i++){
@@ -416,6 +416,8 @@
 				str = str.replace(/[\s\-\,]/g,"");
 				if(str.indexOf(name) == 0) tmp.push(i);
 			}
+
+
 
 			this.clearResults();
 			ol = document.createElement('ol');
@@ -443,20 +445,29 @@
 		var name = document.getElementById('place-number').value.toLowerCase();
 		var html = "";
 		var tmp = [];
-		var str,tmp,i,ol,li;
-		for(i = 0; i < this.premises[this.address.street].numbers.length; i++){
+		var str,i,ol,li;
+
+		for(i = 0 ; i < this.premises[this.address.street].numbers.length; i++){
+			str = str = this.premises[this.address.street].numbers[i].n+' '+this.premises[this.address.street].street+', '+this.premises[this.address.street].locality;
+			datum = {'rank':0,'key':i,'value':str};
+			
 			str = this.premises[this.address.street].numbers[i].n.toLowerCase();
-			if(str.indexOf(name) >= 0) tmp.push(i);
+			if(str.indexOf(name) == 0) datum.rank += 3;
+			if(str.indexOf(name) > 0) datum.rank += 1;
+
+			if(datum.rank > 0) tmp.push(datum);
 		}
+		tmp = sortBy(tmp,'rank');
+
 		this.clearResults();
 		ol = document.createElement('ol');
 		for(i = 0; i < tmp.length; i++){
-			str = this.premises[this.address.street].numbers[tmp[i]].n+' '+this.premises[this.address.street].street+', '+this.premises[this.address.street].locality;
+			str = this.premises[this.address.street].numbers[tmp[i].key].n+' '+this.premises[this.address.street].street+', '+this.premises[this.address.street].locality;
 			li = document.createElement('li');
-			li.setAttribute('data-n',tmp[i]);
+			li.setAttribute('data-n',tmp[i].key);
 			if(i==0) li.classList.add('selected');
 			li.innerHTML = '<a href="#" class="padding-small name">'+str+'</a>';
-			addEvent('click',li.querySelector('a'),{me:this,n:tmp[i]},function(e){
+			addEvent('click',li.querySelector('a'),{me:this,n:tmp[i].key},function(e){
 				e.preventDefault();
 				e.data.me.selectStreetNumber(e.data.n);				
 			});
@@ -769,7 +780,12 @@
 		return str;
 	}
 
-
+	// Sort the data
+	function sortBy(arr,i){
+		return arr.sort(function (a, b) {
+			return a[i] < b[i] ? 1 : -1;
+		});
+	}
 	function removeEl(el){
 		// version 1
 		if(!el) return;
