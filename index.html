@@ -154,11 +154,11 @@
 			</section>
 			<section id="about" class="screen">
 				<h2>Credits</h2>
-				<p>This web-based app was created by ODI Leeds as an experiment in August 2019. The <a href="https://datamillnorth.org/dataset/household-waste-collections">bin collection data published by Leeds City Council on Data Mill North</a> does not include postcode due to licensing issues with Royal Mail. This is an experiment to combine the addresses provided with OS open data to make it possible to only use the house name/number and street name to locate a property.</p>
+				<p>This web-based app was created by Open Innovations (ODI Leeds) as an experiment in August 2019. The <a href="https://datamillnorth.org/dataset/household-waste-collections">bin collection data published by Leeds City Council on Data Mill North</a> does not include postcode due to licensing issues with Royal Mail. This is an experiment to combine the addresses provided with OS open data to make it possible to only use the house name/number and street name to locate a property.</p>
 				<p>Our friends at <a href="http://imactivate.com/">imactivate</a> also make a <a href="http://imactivate.com/leedsbins/">Leeds Bins</a> app that is available on <a href="https://play.google.com/store/apps/details?id=com.imactivate.bins&hl=en_GB">Android</a>, <a href="https://itunes.apple.com/gb/app/leeds-bins/id1013036432?mt=8">iOS</a>, and <a href="https://www.microsoft.com/en-gb/store/p/leeds-bins/9nblggh38r85">Windows</a>. They let you search for your address by postcode (they use some closed data) and let you add reminders to your device's calendar.</p>
 				<h3>Copyright and sources</h3>
 				<ul>
-					<li><strong>Processing:</strong> Stuart Lowe, ODI Leeds (<a href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>)</li>
+					<li><strong>Processing:</strong> Stuart Lowe, <a href="https://open-innovations.org/">Open Innovations</a> (<a href="http://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>)</li>
 					<li style="display:none"><strong>Local Authority Boundaries:</strong> <a href="http://geoportal.statistics.gov.uk/datasets/local-authority-districts-april-2019-boundaries-uk-buc">Local Authority Districts (April 2019) Boundaries UK BUC</a> (OGL v3; Contains National Statistics data &copy; Crown copyright and database right 2019; Contains OS data &copy; Crown copyright and database right 2019)</li>
 					<li><strong>Bin collection data:</strong>  and <a href="http://opendata.leeds.gov.uk/downloads/bins/dm_jobs.csv">waste collections</a> from Leeds City Council (<a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">OGLv3</a>).</li>
 					<li><strong>Addresses:</strong> The addresses come from Leeds City Council's <a href="http://opendata.leeds.gov.uk/downloads/bins/dm_premises.csv">Household premises</a> list (<a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">OGLv3</a>) but, as they are in all-caps, the street names and localities have been tidied up using <a href="https://www.ordnancesurvey.co.uk/business-and-government/products/os-open-names.html">OS Open Names</a> (Contains Ordnance Survey data © Crown copyright and database right 2018. Contains Royal Mail data © Royal Mail copyright and database right 2018. Contains National Statistics data © Crown copyright and database right 2018.)</li>
@@ -170,9 +170,13 @@
 
 	<footer class="b1-bg">
 		<div class="holder">
-			<p>&copy; 2019 ODI Leeds</p>
+			<p>&copy; 2019-2022 Open Innovations</p>
 		</div>
 	</footer>
 
+	<script src="https://open-innovations.org/resources/oi.log.js"></script>
+	<script>
+	OI.log.setup({'id':'open-innovations','target':['odileeds.github.io','open-innovations.github.io']}).add('action=view');
+	</script>
 </body>
 </html>
