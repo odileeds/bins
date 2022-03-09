@@ -10,7 +10,7 @@
 	"theme_color": "#F9BC26",
 	"background_color": "#F9BC26",
 	"icons": [{
-		"src": "https://open-innovations.org/resources/images/logos/oi-square-14.svg",
+		"src": "/resources/oi-square-14.svg",
 		"sizes": "any"
 	}]
 }
