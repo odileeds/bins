@@ -31,8 +31,8 @@ jobs:
       # Runs script
       - name: Run update script
         run: |
-          wget -O data/leeds/dm_premises.csv http://opendata.leeds.gov.uk/downloads/bins/dm_premises.csv
-          wget -O data/leeds/dm_jobs.csv http://opendata.leeds.gov.uk/downloads/bins/dm_jobs.csv
+          wget –quiet -O data/leeds/dm_premises.csv http://opendata.leeds.gov.uk/downloads/bins/dm_premises.csv
+          wget –quiet -O data/leeds/dm_jobs.csv http://opendata.leeds.gov.uk/downloads/bins/dm_jobs.csv
 
       - name: Process bin data
         run: |
