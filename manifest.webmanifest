@@ -4,21 +4,13 @@
 	"name": "Leeds bin dates",
 	"short_name": "Leeds Bins",
 	"description": "Get your next bin collection dates.",
-	"start_url": "https://odileeds.github.io/bins/index.html",
+	"start_url": "https://odileeds.github.io/bins/",
 	"display": "fullscreen",
-	"orientation": "portrait",
 	"orientation": "portrait",
 	"theme_color": "#F9BC26",
 	"background_color": "#F9BC26",
-	"serviceworker": {
-		"src": "sw.js",
-		"scope": "/bins/",
-		"update_via_cache": "none"
-	},
 	"icons": [{
-		"src": "odileeds.png",
-		"sizes": "36x36 48x48 72x72 96x96 144x144 192x192 512x512",
-		"type": "image/png"
-
+		"src": "https://open-innovations.org/resources/images/logos/oi-square-14.svg",
+		"sizes": "any"
 	}]
 }
