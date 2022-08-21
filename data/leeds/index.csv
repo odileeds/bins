@@ -19,10 +19,10 @@ BLB-BOD,data/leeds/premises-BLB-BOD.csv
 BOE-BRA,data/leeds/premises-BOE-BRA.csv
 BRB-BRI,data/leeds/premises-BRB-BRI.csv
 BRJ-BRO,data/leeds/premises-BRJ-BRO.csv
-BRP-BUL,data/leeds/premises-BRP-BUL.csv
-BUM-BUT,data/leeds/premises-BUM-BUT.csv
-BUU-CAM,data/leeds/premises-BUU-CAM.csv
-CAN-CAR,data/leeds/premises-CAN-CAR.csv
+BRP-BUD,data/leeds/premises-BRP-BUD.csv
+BUE-BUR,data/leeds/premises-BUE-BUR.csv
+BUS-CAL,data/leeds/premises-BUS-CAL.csv
+CAM-CAR,data/leeds/premises-CAM-CAR.csv
 CAS-CAV,data/leeds/premises-CAS-CAV.csv
 CAW-CHA,data/leeds/premises-CAW-CHA.csv
 CHB-CHE,data/leeds/premises-CHB-CHE.csv
@@ -53,8 +53,8 @@ GAT-GIP,data/leeds/premises-GAT-GIP.csv
 GIQ-GLE,data/leeds/premises-GIQ-GLE.csv
 GLF-GRA,data/leeds/premises-GLF-GRA.csv
 GRB-GRE,data/leeds/premises-GRB-GRE.csv
-GRF-GUY,data/leeds/premises-GRF-GUY.csv
-GUZ-HAL,data/leeds/premises-GUZ-HAL.csv
+GRF-GUP,data/leeds/premises-GRF-GUP.csv
+GUQ-HAL,data/leeds/premises-GUQ-HAL.csv
 HAM-HAR,data/leeds/premises-HAM-HAR.csv
 HAS-HAW,data/leeds/premises-HAS-HAW.csv
 HAX-HEA,data/leeds/premises-HAX-HEA.csv
