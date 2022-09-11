@@ -53,8 +53,8 @@ GAT-GIP,data/leeds/premises-GAT-GIP.csv
 GIQ-GLE,data/leeds/premises-GIQ-GLE.csv
 GLF-GRA,data/leeds/premises-GLF-GRA.csv
 GRB-GRE,data/leeds/premises-GRB-GRE.csv
-GRF-GUP,data/leeds/premises-GRF-GUP.csv
-GUQ-HAL,data/leeds/premises-GUQ-HAL.csv
+GRF-GUN,data/leeds/premises-GRF-GUN.csv
+GUO-HAL,data/leeds/premises-GUO-HAL.csv
 HAM-HAR,data/leeds/premises-HAM-HAR.csv
 HAS-HAW,data/leeds/premises-HAS-HAW.csv
 HAX-HEA,data/leeds/premises-HAX-HEA.csv
@@ -134,8 +134,8 @@ SWJ-TAT,data/leeds/premises-SWJ-TAT.csv
 TAU-TEM,data/leeds/premises-TAU-TEM.csv
 TEN-THE,data/leeds/premises-TEN-THE.csv
 THF-THO,data/leeds/premises-THF-THO.csv
-THP-TOM,data/leeds/premises-THP-TOM.csv
-TON-TOW,data/leeds/premises-TON-TOW.csv
+THP-TOF,data/leeds/premises-THP-TOF.csv
+TOG-TOW,data/leeds/premises-TOG-TOW.csv
 TOX-TRU,data/leeds/premises-TOX-TRU.csv
 TRV-TYE,data/leeds/premises-TRV-TYE.csv
 TYF-VAL,data/leeds/premises-TYF-VAL.csv
