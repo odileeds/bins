@@ -19,8 +19,8 @@ BLB-BOD,data/leeds/premises-BLB-BOD.csv
 BOE-BRA,data/leeds/premises-BOE-BRA.csv
 BRB-BRI,data/leeds/premises-BRB-BRI.csv
 BRJ-BRO,data/leeds/premises-BRJ-BRO.csv
-BRP-BUD,data/leeds/premises-BRP-BUD.csv
-BUE-BUR,data/leeds/premises-BUE-BUR.csv
+BRP-BUC,data/leeds/premises-BRP-BUC.csv
+BUD-BUR,data/leeds/premises-BUD-BUR.csv
 BUS-CAL,data/leeds/premises-BUS-CAL.csv
 CAM-CAR,data/leeds/premises-CAM-CAR.csv
 CAS-CAV,data/leeds/premises-CAS-CAV.csv
