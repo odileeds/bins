@@ -35,10 +35,10 @@ COP-COT,data/leeds/premises-COP-COT.csv
 COU-CRA,data/leeds/premises-COU-CRA.csv
 CRB-CRO,data/leeds/premises-CRB-CRO.csv
 CRP-DAR,data/leeds/premises-CRP-DAR.csv
-DAS-DEI,data/leeds/premises-DAS-DEI.csv
-DEJ-DIC,data/leeds/premises-DEJ-DIC.csv
-DID-DUC,data/leeds/premises-DID-DUC.csv
-DUD-EAS,data/leeds/premises-DUD-EAS.csv
+DAS-DEE,data/leeds/premises-DAS-DEE.csv
+DEF-DIB,data/leeds/premises-DEF-DIB.csv
+DIC-DRU,data/leeds/premises-DIC-DRU.csv
+DRV-EAS,data/leeds/premises-DRV-EAS.csv
 EAT-EDI,data/leeds/premises-EAT-EDI.csv
 EDJ-ELM,data/leeds/premises-EDJ-ELM.csv
 ELN-FAI,data/leeds/premises-ELN-FAI.csv
