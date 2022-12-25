@@ -6,8 +6,8 @@ ALM-ANG,data/leeds/premises-ALM-ANG.csv
 ANH-ARM,data/leeds/premises-ANH-ARM.csv
 ARN-ASH,data/leeds/premises-ARN-ASH.csv
 ASI-AUD,data/leeds/premises-ASI-AUD.csv
-AUE-AZA,data/leeds/premises-AUE-AZA.csv
-AZB-BAC,data/leeds/premises-AZB-BAC.csv
+AUE-AYS,data/leeds/premises-AUE-AYS.csv
+AYT-BAC,data/leeds/premises-AYT-BAC.csv
 BAD-BAN,data/leeds/premises-BAD-BAN.csv
 BAO-BAR,data/leeds/premises-BAO-BAR.csv
 BAS-BEC,data/leeds/premises-BAS-BEC.csv
@@ -64,8 +64,8 @@ HIH-HIL,data/leeds/premises-HIH-HIL.csv
 HIM-HOL,data/leeds/premises-HIM-HOL.csv
 HOM-HOU,data/leeds/premises-HOM-HOU.csv
 HOV-IBB,data/leeds/premises-HOV-IBB.csv
-IBC-INV,data/leeds/premises-IBC-INV.csv
-INW-JAK,data/leeds/premises-INW-JAK.csv
+IBC-INT,data/leeds/premises-IBC-INT.csv
+INU-JAK,data/leeds/premises-INU-JAK.csv
 JAL-KEL,data/leeds/premises-JAL-KEL.csv
 KEM-KEP,data/leeds/premises-KEM-KEP.csv
 KEQ-KIN,data/leeds/premises-KEQ-KIN.csv
@@ -119,8 +119,8 @@ SCI-SEF,data/leeds/premises-SCI-SEF.csv
 SEG-SHA,data/leeds/premises-SEG-SHA.csv
 SHB-SIC,data/leeds/premises-SHB-SIC.csv
 SID-SIS,data/leeds/premises-SID-SIS.csv
-SIT-SOM,data/leeds/premises-SIT-SOM.csv
-SON-SOU,data/leeds/premises-SON-SOU.csv
+SIT-SOL,data/leeds/premises-SIT-SOL.csv
+SOM-SOU,data/leeds/premises-SOM-SOU.csv
 SOV-SPR,data/leeds/premises-SOV-SPR.csv
 SPS-STC,data/leeds/premises-SPS-STC.csv
 STB-STO,data/leeds/premises-STB-STO.csv
