@@ -105,8 +105,8 @@ PLF-POR,data/leeds/premises-PLF-POR.csv
 POS-PRI,data/leeds/premises-POS-PRI.csv
 PRJ-QUA,data/leeds/premises-PRJ-QUA.csv
 QUB-RAD,data/leeds/premises-QUB-RAD.csv
-RAE-RAY,data/leeds/premises-RAE-RAY.csv
-RAZ-RED,data/leeds/premises-RAZ-RED.csv
+RAE-RAW,data/leeds/premises-RAE-RAW.csv
+RAX-RED,data/leeds/premises-RAX-RED.csv
 REE-RIC,data/leeds/premises-REE-RIC.csv
 RID-RIP,data/leeds/premises-RID-RIP.csv
 RIQ-ROC,data/leeds/premises-RIQ-ROC.csv
