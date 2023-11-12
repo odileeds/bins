@@ -98,11 +98,11 @@ OAL-OLD,data/leeds/premises-OAL-OLD.csv
 OLE-OTT,data/leeds/premises-OLE-OTT.csv
 OTU-PAD,data/leeds/premises-OTU-PAD.csv
 PAE-PAR,data/leeds/premises-PAE-PAR.csv
-PAS-PEM,data/leeds/premises-PAS-PEM.csv
-PEN-PHO,data/leeds/premises-PEN-PHO.csv
-PHP-PLE,data/leeds/premises-PHP-PLE.csv
-PLF-POR,data/leeds/premises-PLF-POR.csv
-POS-PRI,data/leeds/premises-POS-PRI.csv
+PAS-PEL,data/leeds/premises-PAS-PEL.csv
+PEM-PET,data/leeds/premises-PEM-PET.csv
+PEU-PLA,data/leeds/premises-PEU-PLA.csv
+PLB-POP,data/leeds/premises-PLB-POP.csv
+POQ-PRI,data/leeds/premises-POQ-PRI.csv
 PRJ-QUA,data/leeds/premises-PRJ-QUA.csv
 QUB-RAD,data/leeds/premises-QUB-RAD.csv
 RAE-RAW,data/leeds/premises-RAE-RAW.csv
