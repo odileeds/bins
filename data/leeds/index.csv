@@ -65,10 +65,10 @@ HIM-HOL,data/leeds/premises-HIM-HOL.csv
 HOM-HOU,data/leeds/premises-HOM-HOU.csv
 HOV-IBB,data/leeds/premises-HOV-IBB.csv
 IBC-INT,data/leeds/premises-IBC-INT.csv
-INU-JAK,data/leeds/premises-INU-JAK.csv
-JAL-KEL,data/leeds/premises-JAL-KEL.csv
-KEM-KEP,data/leeds/premises-KEM-KEP.csv
-KEQ-KIN,data/leeds/premises-KEQ-KIN.csv
+INU-JAC,data/leeds/premises-INU-JAC.csv
+JAD-KEA,data/leeds/premises-JAD-KEA.csv
+KEB-KEN,data/leeds/premises-KEB-KEN.csv
+KEO-KIN,data/leeds/premises-KEO-KIN.csv
 KIO-KIT,data/leeds/premises-KIO-KIT.csv
 KIU-LAK,data/leeds/premises-KIU-LAK.csv
 LAL-LAN,data/leeds/premises-LAL-LAN.csv
