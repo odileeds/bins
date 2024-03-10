@@ -112,8 +112,8 @@ RID-RIP,data/leeds/premises-RID-RIP.csv
 RIQ-ROC,data/leeds/premises-RIQ-ROC.csv
 ROD-ROS,data/leeds/premises-ROD-ROS.csv
 ROT-RUD,data/leeds/premises-ROT-RUD.csv
-RUE-SAL,data/leeds/premises-RUE-SAL.csv
-SAM-SAN,data/leeds/premises-SAM-SAN.csv
+RUE-SAK,data/leeds/premises-RUE-SAK.csv
+SAL-SAN,data/leeds/premises-SAL-SAN.csv
 SAO-SCH,data/leeds/premises-SAO-SCH.csv
 SCI-SEF,data/leeds/premises-SCI-SEF.csv
 SEG-SHA,data/leeds/premises-SEG-SHA.csv
