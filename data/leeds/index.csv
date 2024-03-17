@@ -136,8 +136,8 @@ TEN-THE,data/leeds/premises-TEN-THE.csv
 THF-THO,data/leeds/premises-THF-THO.csv
 THP-TOF,data/leeds/premises-THP-TOF.csv
 TOG-TOW,data/leeds/premises-TOG-TOW.csv
-TOX-TRU,data/leeds/premises-TOX-TRU.csv
-TRV-TYE,data/leeds/premises-TRV-TYE.csv
+TOX-TRO,data/leeds/premises-TOX-TRO.csv
+TRP-TYE,data/leeds/premises-TRP-TYE.csv
 TYF-VAL,data/leeds/premises-TYF-VAL.csv
 VAM-VIC,data/leeds/premises-VAM-VIC.csv
 VID-WAL,data/leeds/premises-VID-WAL.csv
