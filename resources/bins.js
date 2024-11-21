@@ -324,7 +324,7 @@
 	}
 
 	Bins.prototype.selectStreetNumber = function(n){
-		if(n != "") this.address.n = (typeof n==="number") ? n : parseInt(n);
+		if(n !== "") this.address.n = (typeof n==="number") ? n : parseInt(n);
 		if(typeof this.address.n==="number"){
 			this.clearResults();
 			this.getCollections(this.premises[this.address.street].numbers[this.address.n].id);
