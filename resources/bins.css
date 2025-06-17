@@ -139,7 +139,7 @@ header nav ul > li.seasonal a:hover, header nav li.seasonal a:focus { background
 header .holder > p { padding: 1em; line-height: 1.5em; }
 header .holder > p a, header .holder > p a:visited { color: inherit; }
 
-#main { padding-top: 4em; }
+#main { padding-top: 4em; padding-bottom: 4em; }
 /* Main box styling */
 #main .holder { padding: 2em 1em; }
 #main p:last-child, #main figure iframe { margin-bottom: 0; }
