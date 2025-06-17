@@ -1,6 +1,7 @@
 /**
-  Created August 7th 2019 by Stuart Lowe (ODI Leeds)
+  Created August 7th 2019 by Stuart Lowe (Open Innovations)
   Last updated 15th July 2021
+  Simplified 17th June 2025
 **/
 (function(root){
 
@@ -30,78 +31,13 @@
 		this.settings = {'notifications':{'ready':false,'enabled':false}};
 
 		this.bins = {
-			'B':{'text':'General waste','cls':'b2-bg','svg':'https://www.leeds.gov.uk/_catalogs/masterpage/public/images/bins_black.svg','url':'https://www.leeds.gov.uk/residents/bins-and-recycling/your-bins/black-bin'},
-			'G':{'text':'Recycling','cls':'c6-bg','svg':'https://www.leeds.gov.uk/_catalogs/masterpage/public/images/bins_green.svg','url':'https://www.leeds.gov.uk/residents/bins-and-recycling/your-bins/green-recycling-bin'},
-			'R':{'text':'Garden waste','cls':'c15-bg','svg':'https://www.leeds.gov.uk/_catalogs/masterpage/public/images/bins_brown.svg','url':'https://www.leeds.gov.uk/residents/bins-and-recycling/your-bins/brown-garden-waste-bin'},
-			'F':{'text':'Food','cls':'c9-bg','svg':'https://www.leeds.gov.uk/_catalogs/masterpage/public/images/bins_food.svg','url':'https://www.leeds.gov.uk/residents/bins-and-recycling/your-bins/food-waste-bin'}
+			'B':{'text':'General waste','cls':'b2-bg','svg':'<svg enable-background="new 0 0 82 129.378" height="129.378" viewBox="0 0 82 129.378" width="82" xmlns="http://www.w3.org/2000/svg" class="bin"><path fill="#4d4d4f" d="m5.722 12.462h70.557v3.079h-70.557z"></path><path fill="#4d4d4f" d="m41.352 23.643h-35.455l6.862 103.549c0 1.207 12.642 2.187 28.24 2.187 15.597 0 28.24-.979 28.24-2.187l6.862-103.549z"></path><path d="m71.59 104.495-1.533 23.137h5.101c.772-2.594 1.275-6.807 1.275-11.568s-.503-8.976-1.275-11.568h-3.568z"></path><path d="m10.419 104.495 1.532 23.137h-5.1c-.772-2.594-1.276-6.807-1.276-11.568s.504-8.976 1.276-11.568h3.568z"></path><g fill="#4d4d4f"><path d="m0 16.957h82v6.686h-82z"></path><path d="m62.771 7.851h-4.253v-6.443c.001-.778-.629-1.408-1.408-1.408h-32.184c-.776 0-1.407.63-1.407 1.408v6.443h-4.251v-.746l-11.479.694v3.255h66.422v-3.255l-11.44-.691zm-37.086 0-.014-4.18c-.003-.777.625-1.408 1.403-1.408h27.852c.777 0 1.409.63 1.412 1.408l.014 4.18z"></path></g></svg>','url':'https://www.leeds.gov.uk/residents/bins-and-recycling/your-bins/black-bin'},
+			'G':{'text':'Recycling','cls':'c6-bg','svg':'<svg enable-background="new 0 0 82 129.378" height="129.378" viewBox="0 0 82 129.378" width="82" xmlns="http://www.w3.org/2000/svg" class="bin"><path fill="#00a550" d="m5.722 12.462h70.557v3.079h-70.557z"></path><path fill="#00a550" d="m41.352 23.643h-35.455l6.862 103.549c0 1.207 12.642 2.187 28.24 2.187 15.597 0 28.24-.979 28.24-2.187l6.862-103.549z"></path><path d="m71.59 104.495-1.533 23.137h5.101c.772-2.594 1.275-6.807 1.275-11.568s-.503-8.976-1.275-11.568h-3.568z"></path><path d="m10.419 104.495 1.532 23.137h-5.1c-.772-2.594-1.276-6.807-1.276-11.568s.504-8.976 1.276-11.568h3.568z"></path><g fill="#00a550"><path d="m0 16.957h82v6.686h-82z"></path><path d="m62.771 7.851h-4.253v-6.443c.001-.778-.629-1.408-1.408-1.408h-32.184c-.776 0-1.407.63-1.407 1.408v6.443h-4.251v-.746l-11.479.694v3.255h66.422v-3.255l-11.44-.691zm-37.086 0-.014-4.18c-.003-.777.625-1.408 1.403-1.408h27.852c.777 0 1.409.63 1.412 1.408l.014 4.18z"></path></g></svg>'},
+			'R':{'text':'Garden waste','cls':'c15-bg','svg':'<svg enable-background="new 0 0 82 129.378" height="129.378" viewBox="0 0 82 129.378" width="82" xmlns="http://www.w3.org/2000/svg"><path fill="#80612e" d="m5.722 12.462h70.557v3.079h-70.557z"></path><path fill="#80612e" d="m41.352 23.643h-35.455l6.862 103.549c0 1.207 12.642 2.187 28.24 2.187 15.597 0 28.24-.979 28.24-2.187l6.862-103.549z"></path><path d="m71.59 104.495-1.533 23.137h5.101c.772-2.594 1.275-6.807 1.275-11.568s-.503-8.976-1.275-11.568h-3.568z"></path><path d="m10.419 104.495 1.532 23.137h-5.1c-.772-2.594-1.276-6.807-1.276-11.568s.504-8.976 1.276-11.568h3.568z"></path><g fill="#80612e"><path d="m0 16.957h82v6.686h-82z"></path><path d="m62.771 7.851h-4.253v-6.443c.001-.778-.629-1.408-1.408-1.408h-32.184c-.776 0-1.407.63-1.407 1.408v6.443h-4.251v-.746l-11.479.694v3.255h66.422v-3.255l-11.44-.691zm-37.086 0-.014-4.18c-.003-.777.625-1.408 1.403-1.408h27.852c.777 0 1.409.63 1.412 1.408l.014 4.18z"></path></g></svg>'},
+			'F':{'text':'Food','cls':'c9-bg','svg':'','url':'https://www.leeds.gov.uk/residents/bins-and-recycling/your-bins/food-waste-bin'}
 		}
 
 		if(console) console.log('%c'+this.title+' v'+this.version+'%c','font-weight:bold;font-size:1.25em;','');
-
-		/* Set up the Service Worker */
-		let deferredPrompt;
-		this.worker;
-		var _obj = this;
-		if('serviceWorker' in navigator){
-			navigator.serviceWorker.register('sw.js',{'scope':'./'}).then(function(registration){
-				_obj.worker = (registration.installing || registration.active);
-				_obj.log('Service worker registered in scope '+registration.scope);		
-			}).catch(function(error){
-				_obj.log('ERROR','Service worker failed to register with error '+error);
-			});
-		
-			// Handler for messages coming from the service worker
-			navigator.serviceWorker.addEventListener('message', function handler(e){
-				if(e.source !== _obj.worker) return;
-				_obj.log('heard',e.data);
-				/*
-				if(e.data.command == "getAddress" && e.data.address){
-					_obj.address = e.data.address;
-					_obj.el.input.find('#place-street')[0].value = _obj.address.streetname+', '+_obj.address.locality;
-					_obj.processStreet(function(){
-						if(this.el.input.find('.searchresults li').length==1){
-							i = parseInt(this.el.input.find('.searchresults li').attr('data-id'));
-							if(this.premises[i].street == this.address.streetname && this.premises[i].locality == this.address.locality){
-								this.selectStreet(i);
-								this.el.input.find('#place-number')[0].value = _obj.address.number;
-								this.processNumber(function(){
-									if(this.el.input.find('.searchresults li').length==1){
-										i = this.address.street;
-										n = parseInt(this.el.input.find('.searchresults li').attr('data-n'));
-										if(this.address.street==i && this.address.n==n) this.selectStreetNumber(n);
-									}
-								});
-							}
-						}
-					});
-				}*/
-			});
-		}
-		
-		window.addEventListener('beforeinstallprompt', function(e){
-			_obj.log('beforeinstallprompt');
-			// Stash the event so it can be triggered later.
-			deferredPrompt = e;
-			e.userChoice.then(function(outcome) { 
-				console.log(outcome); // either "accepted" or "dismissed"
-			}, function(){ _obj.log('ERROR','Something went wrong with user choice'); });
-		});
-
-		
-		// Update network status
-		updateNetworkStatus();
-		window.addEventListener('online', updateNetworkStatus, false);
-		window.addEventListener('offline', updateNetworkStatus, false);
-		function updateNetworkStatus(){
-			var h = document.querySelector('header');
-			if(navigator.onLine){
-				h.classList.remove('b4-bg');
-				h.classList.add('c14-bg');
-			}else{
-				h.classList.remove('c14-bg');
-				h.classList.add('b4-bg');
-			}
-		}
 
 		this.init();
 
@@ -542,7 +478,7 @@
 					dates.push(d);
 					if(d >= now){
 						li = document.createElement('li');
-						li.innerHTML = '<a href="'+this.bins[t].url+'" class="'+this.bins[t].cls+'"><img src="'+this.bins[t].svg+'" class="bin" alt="'+this.bins[t].text+' bin" /><h2>'+this.bins[t].text+'</h2><time datetime="'+d.toISOString()+'">'+formatDate(d)+'</time></a>';
+						li.innerHTML = '<a href="'+this.bins[t].url+'" class="'+this.bins[t].cls+'">'+this.bins[t].svg+'<h2>'+this.bins[t].text+'</h2><time datetime="'+d.toISOString()+'">'+formatDate(d)+'</time></a>';
 						ul.appendChild(li);
 						added++;
 						this.events.push({'date':d.toISOString(),'url':this.bins[t].url,'bin':this.bins[t].text,'nicedate':formatDate(d),'icon':this.bins[t].svg});

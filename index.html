@@ -8,15 +8,8 @@
 	<link rel="StyleSheet" href="resources/bins.css" type="text/css" />
 	<meta name="theme-color" content="#F9BC26">
 	<link rel="apple-touch-icon" href="odileeds.png">
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:site" content="@ODILeeds">
-	<meta name="twitter:url" property="og:url" content="https://odileeds.github.io/bins/">
-	<meta name="twitter:title" property="og:title" content="Bin times">
-	<meta name="twitter:description" property="og:description" content="Find the rubbish bin collection times for Leeds">
-	<meta name="twitter:image" property="og:image" content="odileeds.png">
 	<meta name="keywords" content="bins,collection,refuse,Leeds" />
-	<link rel="manifest" href="manifest.webmanifest">
-	<script type="text/javascript" src="resources/bins.js?new"></script>
+	<script type="text/javascript" src="resources/bins.js"></script>
 	<style>
 	/* Spinner style */
 	.spinner {
@@ -87,7 +80,7 @@
 					<li><a href="#about">Credits</a></li>
 				</ul>
 			</nav>
-			<p>Created by <a href="https://odileeds.org/">ODI Leeds</a> using open data <a href="https://datamillnorth.org/dataset/household-waste-collections">published</a> by Leeds City Council on <a href="https://datamillnorth.org/">Data Mill North</a>.</p>
+			<p>Created by <a href="https://open-innovations.org/">Open Innovations</a> (previously ODI Leeds) using open data <a href="https://datamillnorth.org/dataset/household-waste-collections">published</a> by Leeds City Council on <a href="https://datamillnorth.org/">Data Mill North</a>.</p>
 		</div>
 	</header>
 	<div class="bg"></div>
@@ -130,7 +123,7 @@
 				</li>
 				<li>
 					<h3>Who made this?</h3>
-					<p>Stuart Lowe at <a href="https://odileeds.org">ODI Leeds</a> as an experiment in dealing with postcode-less addresses and making progressive web apps. Our friends at imactivate also make <a href="https://odileeds.org/products/bin-app/">the Leeds Bins App</a> on Android and iOS which uses some closed data to allow postcode lookups.</p>
+					<p>In 2019, Stuart Lowe (<a href="https://open-innovations.org">Open Innovations</a>) created this as an experiment with postcode-less addresses and making progressive web apps. Our friends at imactivate also make <a href="https://odileeds.org/products/bin-app/">the Leeds Bins App</a> on Android and iOS which uses some closed data to allow postcode lookups.</p>
 				</li>
 				<li>
 					<h3>How do you know my bin collections dates?</h3>
@@ -139,6 +132,7 @@
 				<li>
 					<h3>Why can't I find my address using my postcode?</h3>
 					<p>Royal Mail own the UK's Postcode Address File (PAF). That limits what information people can share. Leeds City Council are not allowed to release a file that contains the address and postcode of every household in Leeds. So Leeds City Council only publish the house name/number, street name, and locality. We've had to combine that with <a href="https://www.ordnancesurvey.co.uk/business-and-government/products/os-open-names.html">Ordnance Survey Open Names</a> data to clean up the presentation of the data.</p>
+					<p>If you want to search by postcode you should use <a href="https://www.leeds.gov.uk/bins-and-recycling/check-your-bin-day">Leeds City Council's "Check you bin day" tool</a>.</p>
 				</li>
 				<li>
 					<h3>Why can't I just type my address with the number then the street?</h3>
@@ -149,13 +143,13 @@
 				</li>
 				<li>
 					<h3>Do you set cookies?</h3>
-					<p>Yes. We save your street name and house name/number to a cookie so that we can speed things up next time you visit. We also create a Service Worker (where your browser supports it) to send notifications to your device.</p>
+					<p>Yes. We save your street name and house name/number to a cookie so that we can speed things up next time you visit.</p>
 				</li>
 				</ul>
 			</section>
 			<section id="about" class="screen">
 				<h2>Credits</h2>
-				<p>This web-based app was created by Open Innovations (ODI Leeds) as an experiment in August 2019. The <a href="https://datamillnorth.org/dataset/household-waste-collections">bin collection data published by Leeds City Council on Data Mill North</a> does not include postcode due to licensing issues with Royal Mail. This is an experiment to combine the addresses provided with OS open data to make it possible to only use the house name/number and street name to locate a property.</p>
+				<p>This web-based app was created by Open Innovations (previously ODI Leeds) as an experiment in August 2019. The <a href="https://datamillnorth.org/dataset/household-waste-collections">bin collection data published by Leeds City Council on Data Mill North</a> does not include postcode due to licensing issues with Royal Mail. This is an experiment to combine the addresses provided with OS open data to make it possible to only use the house name/number and street name to locate a property.</p>
 				<p>Our friends at <a href="http://imactivate.com/">imactivate</a> also make a <a href="http://imactivate.com/leedsbins/">Leeds Bins</a> app that is available on <a href="https://play.google.com/store/apps/details?id=com.imactivate.bins&hl=en_GB">Android</a>, <a href="https://itunes.apple.com/gb/app/leeds-bins/id1013036432?mt=8">iOS</a>, and <a href="https://www.microsoft.com/en-gb/store/p/leeds-bins/9nblggh38r85">Windows</a>. They let you search for your address by postcode (they use some closed data) and let you add reminders to your device's calendar.</p>
 				<h3>Copyright and sources</h3>
 				<ul>
@@ -171,7 +165,7 @@
 
 	<footer class="b1-bg">
 		<div class="holder">
-			<p>&copy; 2019-2022 Open Innovations</p>
+			<p>&copy; 2019-2025 Open Innovations</p>
 		</div>
 	</footer>
 
