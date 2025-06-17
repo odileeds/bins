@@ -23,13 +23,13 @@ $filepremises = $dir."/dm_premises.csv";
 # Update data as necessary
 if(-e $filepremises && fileAgeDays($filepremises) < -1){ `rm $filepremises`; }
 if(!-e $filepremises || -s $filepremises == 0){
-	print "Downloading $filepremises\n";
+	msg("Downloading <cyan>$filepremises<none>\n");
 	`wget -q --no-check-certificate -O $filepremises "$urlpremises"`;
 	`rm $dir/premises-*`;
 }
 if(-e $filejobs && fileAgeDays($filejobs) < -1){ `rm $filejobs`; }
 if(!-e $filejobs || -s $filejobs == 0){
-	print "Downloading $filejobs\n";
+	msg("Downloading <cyan>$filejobs<none>\n");
 	`wget -q --no-check-certificate -O $filejobs "$urljobs"`;
 	`rm $dir/jobs-*`;
 }
@@ -40,7 +40,7 @@ if(!-e $filejobs || -s $filejobs == 0){
 #1050327,BROWN,31/08/19
 %jobs;
 %collections;
-print "Processing jobs...\n";
+msg("Processing jobs...\n");
 open(FILE,$filejobs);
 $line = <FILE>;
 while($line = <FILE>){
@@ -52,7 +52,7 @@ while($line = <FILE>){
 		if(!$jobs{$p}){ @{$jobs{$p}} = (); }
 		$d =~ s/([0-9]{2})\/([0-9]{2})\/([0-9]{2})/$3$2$1/;
 		if($conv{$t}){ $t = $conv{$t}; }
-		else { print "No short version of ".$t."\n"; }
+		else { warning("No short version of <yellow>".$t."<none>\n"); }
 		push(@{$jobs{$p}},"$d:$t");
 	}
 }
@@ -79,7 +79,7 @@ for($i = 0; $i < @premises ; $i++){
 
 
 # Read in the OS streets data
-print "Read OS streets data...\n";
+msg("Read OS streets data...\n");
 open(FILE,$dir."/names.csv");
 @lines = <FILE>;
 close(FILE);
@@ -95,7 +95,7 @@ for($i = 0; $i < $n; $i++){
 }
 
 # Read in the OS places data
-print "Read OS places data...\n";
+msg("Read OS places data...\n");
 open(FILE,$dir."/places.csv");
 @lines = <FILE>;
 close(FILE);
@@ -118,7 +118,7 @@ close(FILE);
 $n = @lines;
 %streets;
 
-print "Processing premises file...\n";
+msg("Processing premises file...\n");
 %premiseslookup;
 for($i = 0; $i < $n; $i++){
 
@@ -147,9 +147,7 @@ for($i = 0; $i < $n; $i++){
 	$p = encode_base36($cols[0]);
 	$premiseslookup{$p} = $cols[0];
 	$id = "$cols[1]".($cols[1] ? ($cols[2] ? ", ":""):"").($cols[2]).":".$p;
-if($lines[$i] =~ /Meanwood Road/i && $cols[2] =~ /173/){
-	print "$cols[0],$cols[1],$cols[2],$s = $id\n";
-}
+
 	if($cols[3]){
 		if(!$streets{$s}){
 			@{$streets{$s}} = ($id);
@@ -178,7 +176,7 @@ foreach $s (sort(keys(%streets))){
 
 		$addr = "";
 		$key = lc($cols[0].", ".$cols[1]);
-		print "$s\n";
+		msg("$s\n");
 #		print "\tA: ".$key." - ".$roads{$key}."\n";
 		if(!$roads{$key}){
 			$key = lc($cols[0].", ".$cols[2]);
@@ -267,7 +265,7 @@ foreach $s (sort(keys(%streets))){
 		
 		$addr =~ s/\,/\t/g;
 		
-		print "\t$addr\n";
+		msg("\t$addr\n");
 
 		if($counter > $limit && $first ne $last){
 			# Reset and open new file
@@ -312,13 +310,13 @@ foreach $s (sort(keys(%streets))){
 				}
 			}
 		}else{
-			print "ERROR on $s\n";
+			error("ERROR on $s\n");
 		}
 
 		$counter++;
 		$last = $first;
 	}else{
-		print "ERROR on $s\n";
+		error("ERROR on $s\n");
 	}
 	$i++;
 }
@@ -345,6 +343,41 @@ close(FILE);
 
 
 ###################
+
+sub msg {
+	my $str = $_[0];
+	my $dest = $_[1]||"STDOUT";
+	
+	my %colours = (
+		'black'=>"\033[0;30m",
+		'red'=>"\033[0;31m",
+		'green'=>"\033[0;32m",
+		'yellow'=>"\033[0;33m",
+		'blue'=>"\033[0;34m",
+		'magenta'=>"\033[0;35m",
+		'cyan'=>"\033[0;36m",
+		'white'=>"\033[0;37m",
+		'none'=>"\033[0m"
+	);
+	foreach my $c (keys(%colours)){ $str =~ s/\< ?$c ?\>/$colours{$c}/g; }
+	if($dest eq "STDERR"){
+		print STDERR $str;
+	}else{
+		print STDOUT $str;
+	}
+}
+
+sub error {
+	my $str = $_[0];
+	$str =~ s/(^[\t\s]*)/$1<red>ERROR:<none> /;
+	msg($str,"STDERR");
+}
+
+sub warning {
+	my $str = $_[0];
+	$str =~ s/(^[\t\s]*)/$1<yellow>WARNING:<none> /;
+	msg($str,"STDERR");
+}
 
 sub previousLetters {
 	my $code = $_[0];
