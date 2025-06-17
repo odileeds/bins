@@ -156,7 +156,7 @@ header > .holder {
 	bottom: 0px;
 	overflow-y: auto;
 }
-header .title { padding-left: 4rem; font-size: 2em; display: flex; }
+header .title { padding-left: 4rem; font-size: 2em; display: flex; align-items: center; }
 header h1 { margin-top: 0em; line-height: 1em; font-weight: bold; font-size: inherit; margin-left: 0.5rem; }
 header img { height: 2em; float: left; margin-right: 1em; }
 
@@ -231,6 +231,8 @@ footer { display: none; }
 	ul.grid:last-child { margin-bottom: 0em; }
 	select { width: 100%; }
 	#place { margin-bottom: 0px; }
+	header .title { font-size: 1em; }
+	header svg { font-size: 1.5em; }
 }
 
 @media only screen and (max-width: 533px) {
